@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>新4年级摸底测 | 猿辅导</title>
-    <link rel="preload" as="image" href="assets/space-mission-xiaoyuan.jpg">
+    <link rel="preload" as="image" href="assets/mobile/kid-launch.jpg">
+    <link rel="preload" as="audio" href="assets/audio/01_ready_xiaoyuan.mp3">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -828,10 +829,11 @@
             min-height: 100vh;
             background-image:
                 linear-gradient(180deg, rgba(4,8,32,0.16) 0%, rgba(102,126,234,0.62) 46%, #f5f5f5 64%),
+                url('assets/mobile/kid-success.jpg'),
                 url('assets/space-mission-xiaoyuan.jpg');
-            background-position: center top, center top;
-            background-size: auto, cover;
-            background-repeat: no-repeat, no-repeat;
+            background-position: center top, center top, center top;
+            background-size: auto, cover, cover;
+            background-repeat: no-repeat, no-repeat, no-repeat;
         }
         .plan-header {
             text-align: center;
@@ -1043,7 +1045,12 @@
            ============================================= */
         .space-page {
             min-height: 100vh;
-            background: linear-gradient(180deg, #020024 0%, #090979 40%, #0d1b4a 100%);
+            background-image:
+                linear-gradient(180deg, rgba(2,0,36,0.86) 0%, rgba(9,9,121,0.88) 38%, rgba(13,27,74,0.98) 100%),
+                url('assets/mobile/kid-repair-action.jpg');
+            background-position: center top, center top;
+            background-size: auto, cover;
+            background-repeat: no-repeat;
             position: relative;
             overflow-x: hidden;
             padding-bottom: 100px;
@@ -1097,10 +1104,11 @@
             border-radius: 22px;
             background-image:
                 linear-gradient(90deg, rgba(8,13,48,0.16), rgba(8,13,48,0.84) 42%, rgba(8,13,48,0.96)),
+                url('assets/mobile/kid-repair-action.jpg'),
                 url('assets/space-mission-xiaoyuan.jpg');
-            background-position: center top, 21% 36%;
-            background-size: auto, 188% auto;
-            background-repeat: no-repeat, no-repeat;
+            background-position: center top, 48% 43%, 21% 36%;
+            background-size: auto, 118% auto, 188% auto;
+            background-repeat: no-repeat, no-repeat, no-repeat;
             border: 1px solid rgba(96,165,250,0.18);
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 18px 40px rgba(0,0,0,0.18);
             overflow: hidden;
@@ -1323,10 +1331,11 @@
             top: 0; left: 0; right: 0; bottom: 0;
             background-image:
                 linear-gradient(180deg, rgba(2,6,23,0.84), rgba(5,9,50,0.94)),
+                url('assets/mobile/kid-holo-guide.jpg'),
                 url('assets/space-mission-xiaoyuan.jpg');
-            background-position: center top, center top;
-            background-size: auto, cover;
-            background-repeat: no-repeat, no-repeat;
+            background-position: center top, center top, center top;
+            background-size: auto, cover, cover;
+            background-repeat: no-repeat, no-repeat, no-repeat;
             z-index: 200;
             flex-direction: column;
             align-items: center;
@@ -1513,10 +1522,11 @@
             top: 0; left: 0; right: 0; bottom: 0;
             background-image:
                 linear-gradient(180deg, rgba(3,7,28,0.3) 0%, rgba(5,9,50,0.72) 44%, rgba(5,9,50,0.98) 100%),
+                url('assets/mobile/kid-success.jpg'),
                 url('assets/space-mission-xiaoyuan.jpg');
-            background-position: center top, center top;
-            background-size: auto, cover;
-            background-repeat: no-repeat, no-repeat;
+            background-position: center top, center top, center top;
+            background-size: auto, cover, cover;
+            background-repeat: no-repeat, no-repeat, no-repeat;
             z-index: 500;
             flex-direction: column;
             align-items: center;
@@ -1527,6 +1537,7 @@
         }
         .complete-overlay.show { display: flex; }
         .co-rocket {
+            display: none;
             width: 210px;
             height: 160px;
             display: flex;
@@ -1631,7 +1642,9 @@
         /* 入场剧场 */
         .cinema {
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
+            top: 0; left: 50%; right: auto; bottom: 0;
+            width: min(100vw, 430px);
+            transform: translateX(-50%);
             background: #000;
             z-index: 600;
             overflow: hidden;
@@ -1656,6 +1669,7 @@
         }
         .cinema-scene.active { opacity: 1; pointer-events: auto; }
         .cinema-bg-img,
+        .start-bg-video,
         .start-bg-img {
             position: absolute;
             inset: 0;
@@ -1666,13 +1680,28 @@
             pointer-events: none;
             user-select: none;
         }
+        .start-bg-video {
+            z-index: 0;
+            transform: scale(1.015);
+            background: #040833 url('assets/mobile/kid-launch.jpg') center top / cover no-repeat;
+        }
         .cinema-bg-img {
             z-index: 0;
             opacity: 1;
         }
+        #scene1 .cinema-bg-img { object-position: center top; }
+        #scene2 .cinema-bg-img { object-position: center top; }
+        #scene3 .cinema-bg-img { object-position: center top; }
+        #scene4 .cinema-bg-img { object-position: center top; }
         .start-bg-img {
             z-index: 0;
             transform: scale(1.015);
+        }
+        .start-bg.auto-intro .start-content,
+        .start-bg.auto-intro .start-vignette,
+        .start-bg.auto-intro .start-nebula,
+        .start-bg.auto-intro .start-asteroid {
+            display: none;
         }
         :root {
             --asset-base: 'assets/';
@@ -1686,11 +1715,7 @@
             width: auto;
             max-width: none;
             aspect-ratio: auto;
-            background-image:
-                url('assets/space-mission-xiaoyuan.jpg');
-            background-position: center top;
-            background-size: cover;
-            background-repeat: no-repeat;
+            background: transparent;
             opacity: 0.45;
             -webkit-mask-image: radial-gradient(ellipse 82% 44% at 52% 38%, #000 0%, #000 42%, transparent 72%);
             mask-image: radial-gradient(ellipse 82% 44% at 52% 38%, #000 0%, #000 42%, transparent 72%);
@@ -1734,7 +1759,7 @@
             position: absolute;
             z-index: 12;
             left: 50%;
-            bottom: 156px;
+            bottom: 260px;
             width: min(330px, calc(100% - 34px));
             display: flex;
             flex-direction: column;
@@ -1752,48 +1777,16 @@
         .cinema-mascot-host.show {
             animation: mascotFloat 3s ease-in-out infinite;
         }
-        .cinema.tts-active .cinema-holo-platform,
-        .cinema.tts-active .cinema-mascot-face::after {
-            animation: holoWave 1s ease-out infinite;
-        }
+        .cinema.tts-active .cinema-holo-platform { animation: holoWave 1s ease-out infinite; }
         .cinema-mascot-face {
-            width: 190px;
-            height: 230px;
-            border-radius: 18px;
-            background: transparent;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: none;
-            order: 2;
-            position: relative;
+            display: none;
         }
         .cinema-mascot-face::after {
-            content: '';
-            position: absolute;
-            inset: -8px;
-            border-radius: 50%;
-            border: 1px solid rgba(96,165,250,0.24);
-            filter: drop-shadow(0 0 12px rgba(59,130,246,0.5));
-            animation: holoEdgePulse 1.7s ease-in-out infinite;
-            pointer-events: none;
+            display: none;
         }
         .cinema-mascot-face svg { display: none; }
         .cinema-photo-mascot {
-            width: 190px;
-            height: 230px;
-            background-image:
-                url('assets/cinema-cockpit-guide.jpg');
-            background-position: -62px -218px;
-            background-size: 365px auto;
-            background-repeat: no-repeat;
-            filter: drop-shadow(0 0 10px rgba(147,197,253,0.56)) drop-shadow(0 10px 14px rgba(15,23,42,0.22));
-            border-radius: 28px;
-            -webkit-mask-image: radial-gradient(ellipse 43% 48% at 42% 46%, #000 0%, #000 64%, rgba(0,0,0,0.62) 80%, transparent 100%);
-            mask-image: radial-gradient(ellipse 43% 48% at 42% 46%, #000 0%, #000 64%, rgba(0,0,0,0.62) 80%, transparent 100%);
-            transform: scale(1.1);
-            animation: mascotBreathe 2s ease-in-out infinite;
+            display: none;
         }
         .cinema-mascot-face .expr-fault,
         .cinema-mascot-face .expr-guide { display: none; }
@@ -1808,7 +1801,7 @@
         .cinema-mascot-host.scene-fault .arm-left { transform-origin: 58px 102px; animation: coverMouthLeft 0.42s ease-in-out infinite; }
         .cinema-mascot-host.scene-fault .arm-right { transform-origin: 102px 102px; animation: coverMouthRight 0.42s ease-in-out infinite; }
         .cinema-mascot-host.speaking .cinema-photo-mascot {
-            animation: mascotBreathe 2s ease-in-out infinite, mascotTalk 1.5s ease-in-out infinite;
+            animation: none;
         }
         @keyframes mascotTalk {
             0%,100% { transform: scale(1.1) rotate(0deg); }
@@ -1988,12 +1981,7 @@
 
         /* 场景1：平静飞行 — 深空巡航 */
         .s1-bg {
-            background-image:
-                linear-gradient(180deg, rgba(3,7,28,0.02), rgba(5,9,50,0.28)),
-                url('assets/cinema-cockpit-calm.jpg');
-            background-position: center top, center top;
-            background-size: auto, cover;
-            background-repeat: no-repeat, no-repeat;
+            background: #03071c;
             animation: cockpitCalmDrift 8s ease-in-out infinite;
         }
         .s1-rocket {
@@ -2028,12 +2016,7 @@
 
         /* 场景2：能量风暴 — 橙红色调 */
         .s2-bg {
-            background-image:
-                linear-gradient(180deg, rgba(24,5,32,0.05), rgba(10,8,48,0.28)),
-                url('assets/cinema-cockpit-fault.jpg');
-            background-position: center top, center top;
-            background-size: auto, cover;
-            background-repeat: no-repeat, no-repeat;
+            background: #10051f;
             animation: cockpitFaultShake 0.42s ease-in-out infinite;
         }
         .s2-storm {
@@ -2119,29 +2102,36 @@
             100% { opacity: 0; transform: translate(var(--dx, -50px), var(--dy, -80px)); }
         }
 
-        /* 场景3：引导用户修复 */
+        /* 场景3：飞船撞击 */
         .s3-bg {
-            background-image:
-                linear-gradient(180deg, rgba(1,0,18,0.08), rgba(5,5,48,0.24)),
-                url('assets/cinema-cockpit-guide.jpg');
-            background-position: center top, center top;
-            background-size: auto, cover;
-            background-repeat: no-repeat, no-repeat;
+            background: #12051b;
+            animation: cockpitImpactShake 0.28s ease-in-out infinite;
+        }
+
+        /* 场景4：引导用户修复 */
+        .s4-bg {
+            background: #010012;
             animation: cockpitGuideGlow 8s ease-in-out infinite;
         }
         @keyframes cockpitCalmDrift {
-            0%, 100% { background-position: center top, center top; background-size: auto, cover; }
-            50% { background-position: center top, 50% 1.5%; background-size: auto, 104% auto; }
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.04); }
         }
         @keyframes cockpitFaultShake {
-            0%, 100% { background-position: center top, center top; filter: saturate(1.05); }
-            25% { background-position: center top, 51% -1px; filter: saturate(1.22); }
-            55% { background-position: center top, 49% 1px; filter: saturate(1.12); }
-            75% { background-position: center top, 50.5% -1px; filter: saturate(1.28); }
+            0%, 100% { filter: saturate(1.05); }
+            25% { filter: saturate(1.22); }
+            55% { filter: saturate(1.12); }
+            75% { filter: saturate(1.28); }
+        }
+        @keyframes cockpitImpactShake {
+            0%, 100% { transform: translate3d(0,0,0); filter: saturate(1.15) contrast(1.05); }
+            20% { transform: translate3d(-3px,2px,0); filter: saturate(1.3) contrast(1.12); }
+            45% { transform: translate3d(4px,-3px,0); filter: saturate(1.22) contrast(1.08); }
+            70% { transform: translate3d(-2px,1px,0); filter: saturate(1.34) contrast(1.14); }
         }
         @keyframes cockpitGuideGlow {
-            0%, 100% { background-position: center top, center top; background-size: auto, cover; filter: brightness(1); }
-            50% { background-position: center top, 50% 1%; background-size: auto, 103% auto; filter: brightness(1.08); }
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.08); }
         }
         .s3-hud {
             position: absolute; z-index: 8;
@@ -2311,9 +2301,103 @@
             50% { box-shadow: 0 0 50px rgba(59,130,246,0.45), 0 0 90px rgba(96,165,250,0.2); border-color: rgba(96,165,250,0.75); }
         }
 
+        /* 错题修复准备页 */
+        .repair-gate {
+            position: fixed; top: 0; left: 50%; right: auto; bottom: 0;
+            width: min(100vw, 430px);
+            transform: translateX(-50%);
+            background:
+                radial-gradient(circle at 18% 6%, rgba(168,85,247,0.35), transparent 30%),
+                linear-gradient(180deg, rgba(3,7,28,0.02) 0%, rgba(3,7,28,0.24) 36%, rgba(3,7,28,0.96) 100%),
+                url('assets/mobile/kid-launch.jpg') center top / cover no-repeat;
+            overflow: hidden;
+            z-index: 620;
+            color: #fff;
+        }
+        .repair-gate::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0; bottom: 0;
+            height: 66%;
+            background: linear-gradient(180deg, transparent 0%, rgba(4,8,32,0.72) 30%, rgba(3,7,28,0.98) 100%);
+            pointer-events: none;
+        }
+        .repair-gate-content {
+            position: relative;
+            z-index: 2;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            text-align: center;
+            padding: 34px 24px 60px;
+        }
+        .repair-gate-kicker {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 7px 14px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.16);
+            border: 1px solid rgba(255,255,255,0.16);
+            color: rgba(255,255,255,0.86);
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+        .repair-gate h1 {
+            font-size: clamp(54px, 14vw, 70px);
+            line-height: 1.05;
+            letter-spacing: 0;
+            text-shadow: 0 0 24px rgba(96,165,250,0.48);
+            margin-bottom: 20px;
+        }
+        .repair-gate-desc {
+            font-size: 18px;
+            line-height: 1.55;
+            color: rgba(255,255,255,0.84);
+            margin-bottom: 26px;
+            max-width: 340px;
+        }
+        .repair-gate-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 100%;
+            margin-bottom: 26px;
+        }
+        .repair-gate-stat {
+            min-height: 68px;
+            border-radius: 14px;
+            background: rgba(5,16,60,0.42);
+            border: 1px solid rgba(96,165,250,0.34);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+        }
+        .repair-gate-stat strong { font-size: 26px; line-height: 1; }
+        .repair-gate-stat span { font-size: 14px; color: rgba(255,255,255,0.64); }
+        .repair-gate-btn {
+            width: min(100%, 336px);
+            height: 66px;
+            border: 1px solid rgba(255,255,255,0.16);
+            border-radius: 20px;
+            background: linear-gradient(135deg, #ff8a2a, #3b82f6);
+            color: #fff;
+            font-size: 24px;
+            font-weight: 900;
+            box-shadow: 0 12px 34px rgba(37,99,235,0.36);
+            cursor: pointer;
+        }
+        .repair-gate-btn:active { transform: scale(0.97); }
+
         /* ==================== 开场页动画 ==================== */
         .start-bg {
-            position: fixed; top:0;left:0;right:0;bottom:0;
+            position: fixed; top:0;left:50%;right:auto;bottom:0;
+            width: min(100vw, 430px);
+            transform: translateX(-50%);
             background: #040833;
             overflow: hidden; cursor: pointer;
             z-index: 600;
@@ -2322,13 +2406,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background-image:
-                linear-gradient(180deg, rgba(3,7,28,0.14) 0%, rgba(3,7,28,0.02) 42%, rgba(4,8,32,0.72) 78%, rgba(4,8,32,0.94) 100%),
-                url('assets/space-mission-xiaoyuan.jpg');
-            background-position: center top, center top;
-            background-size: auto, cover;
-            background-repeat: no-repeat, no-repeat;
-            transform: scale(1.015);
+            background: linear-gradient(180deg, rgba(3,7,28,0.14) 0%, rgba(3,7,28,0.02) 42%, rgba(4,8,32,0.72) 78%, rgba(4,8,32,0.94) 100%);
             z-index: 0;
         }
         .start-bg::after {
@@ -2402,6 +2480,21 @@
         @keyframes nebulaFloat1 { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(40px,20px) scale(1.15)} }
         @keyframes nebulaFloat2 { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(-30px,-25px) scale(1.1)} }
         @keyframes nebulaFloat3 { 0%{transform:translate(0,0) scale(0.9)} 100%{transform:translate(20px,15px) scale(1.2)} }
+
+        @media (max-width: 640px) {
+            .start-stars-1,
+            .start-stars-2,
+            .start-stars-3,
+            .start-nebula,
+            .start-asteroid,
+            .cinema-stars,
+            .cinema-dust,
+            .s2-storm,
+            .s1-trail {
+                animation: none !important;
+            }
+            .cinema-scene { transition: opacity 0.25s ease; }
+        }
 
         .start-asteroid {
             position: absolute; pointer-events: none;
@@ -2629,10 +2722,11 @@
         .ai-header {
             background-image:
                 linear-gradient(180deg, rgba(15,23,42,0.34), rgba(30,58,95,0.92)),
+                url('assets/mobile/kid-holo-guide.jpg'),
                 url('assets/space-mission-xiaoyuan.jpg');
-            background-position: center top, center 28%;
-            background-size: auto, cover;
-            background-repeat: no-repeat, no-repeat;
+            background-position: center top, center 28%, center 28%;
+            background-size: auto, cover, cover;
+            background-repeat: no-repeat, no-repeat, no-repeat;
             padding: 28px 20px 44px;
             border-radius: 0 0 32px 32px;
             text-align: center;
@@ -3056,50 +3150,13 @@
         .pqc-video { border-radius: 8px; overflow: hidden; }
         .pqc-video video { width: 100%; display: block; border-radius: 8px; }
 
-        /* ===== 动画降级：尊重用户「减少动画」设置 ===== */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-            .space-stars, .space-nebula, .start-stars-1, .start-stars-2, .start-stars-3,
-            .start-nebula, .confetti, .start-ship-float {
-                animation: none !important;
-            }
-        }
-
     </style>
-    <script>
-    // 非关键资源延迟预加载
-    if ('requestIdleCallback' in window) {
-        requestIdleCallback(function() {
-            ['assets/cinema-cockpit-fault.jpg','assets/cinema-cockpit-guide.jpg'].forEach(function(src) {
-                var img = new Image(); img.src = src;
-            });
-        });
-    }
-    </script>
 </head>
 <body>
 
-<div class="page" id="app">
-    <!-- 骨架屏：JS执行完后自动移除 -->
-    <div id="skeleton" style="min-height:100vh;background:linear-gradient(180deg,#0f0c29 0%,#302b63 50%,#24243e 100%);display:flex;flex-direction:column;align-items:center;padding:60px 20px;">
-        <div style="width:120px;height:18px;background:rgba(255,255,255,0.1);border-radius:9px;margin-bottom:24px;animation:skPulse 1.2s ease infinite;"></div>
-        <div style="width:180px;height:24px;background:rgba(255,255,255,0.15);border-radius:12px;margin-bottom:12px;animation:skPulse 1.2s ease 0.1s infinite;"></div>
-        <div style="width:140px;height:14px;background:rgba(255,255,255,0.08);border-radius:7px;margin-bottom:40px;animation:skPulse 1.2s ease 0.2s infinite;"></div>
-        <div style="width:100%;max-width:380px;height:200px;background:rgba(255,255,255,0.06);border-radius:18px;margin-bottom:16px;animation:skPulse 1.2s ease 0.3s infinite;"></div>
-        <div style="width:100%;max-width:380px;height:300px;background:rgba(255,255,255,0.06);border-radius:18px;animation:skPulse 1.2s ease 0.4s infinite;"></div>
-    </div>
-</div>
-<style>
-@keyframes skPulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-</style>
+<div class="page" id="app"></div>
 
 <script>
-(function() {
-'use strict';
 // ==================== 音效系统（Web Audio API） ====================
 const AudioCtx = window.AudioContext || window.webkitAudioContext;
 let _audioCtx = null;
@@ -3110,7 +3167,6 @@ function getAudioCtx() {
 
 function playTone(freq, duration, type, vol) {
     try {
-        if (_ttsPlaying) return;
         const ctx = getAudioCtx();
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
@@ -3179,14 +3235,13 @@ function _makeReverb(ctx, decay, len) {
 
 function sfxEngine() {
     try {
-        if (_ttsPlaying) return;
         const ctx = getAudioCtx();
         const t = ctx.currentTime;
         const dur = 5;
         const master = ctx.createGain();
         master.gain.setValueAtTime(0, t);
-        master.gain.linearRampToValueAtTime(0.05, t + 1);
-        master.gain.setValueAtTime(0.05, t + dur - 1.5);
+        master.gain.linearRampToValueAtTime(0.18, t + 1);
+        master.gain.setValueAtTime(0.18, t + dur - 1.5);
         master.gain.exponentialRampToValueAtTime(0.001, t + dur);
         const comp = ctx.createDynamicsCompressor();
         comp.threshold.value = -24; comp.ratio.value = 8;
@@ -3206,7 +3261,7 @@ function sfxEngine() {
         for (let i = 0; i < rumbleLen; i++) rd[i] = (Math.random() * 2 - 1) * 0.3;
         const rs = ctx.createBufferSource(); rs.buffer = rumbleBuf;
         const rf = ctx.createBiquadFilter(); rf.type = 'lowpass'; rf.frequency.value = 50; rf.Q.value = 1;
-        const rg = ctx.createGain(); rg.gain.value = 0.035;
+        const rg = ctx.createGain(); rg.gain.value = 0.12;
         rs.connect(rf); rf.connect(rg); rg.connect(master); rs.start(t);
         const lfo = ctx.createOscillator(); const lfoG = ctx.createGain();
         lfo.frequency.value = 0.4; lfoG.gain.value = 8;
@@ -3227,12 +3282,11 @@ function sfxEngine() {
 
 function sfxAlarm() {
     try {
-        if (_ttsPlaying) return;
         const ctx = getAudioCtx();
         const t = ctx.currentTime;
         const rev = _makeReverb(ctx, 2.5, 1.5);
         rev.connect(ctx.destination);
-        const master = ctx.createGain(); master.gain.value = 0.045;
+        const master = ctx.createGain(); master.gain.value = 0.15;
         master.connect(ctx.destination); master.connect(rev);
         for (let i = 0; i < 8; i++) {
             const st = t + i * 0.4;
@@ -3263,16 +3317,15 @@ function sfxAlarm() {
 
 function sfxExplosion() {
     try {
-        if (_ttsPlaying) return;
         const ctx = getAudioCtx();
         const t = ctx.currentTime;
         const dur = 3.5;
-        const master = ctx.createGain(); master.gain.value = 0.055;
+        const master = ctx.createGain(); master.gain.value = 0.3;
         const comp = ctx.createDynamicsCompressor();
         comp.threshold.value = -20; comp.ratio.value = 12;
         master.connect(comp); comp.connect(ctx.destination);
         const rev = _makeReverb(ctx, 1.5, 3);
-        const revG = ctx.createGain(); revG.gain.value = 0.14;
+        const revG = ctx.createGain(); revG.gain.value = 0.4;
         master.connect(revG); revG.connect(rev); rev.connect(ctx.destination);
         const noiseLen = ctx.sampleRate * dur;
         const nBuf = ctx.createBuffer(2, noiseLen, ctx.sampleRate);
@@ -3305,7 +3358,7 @@ function sfxExplosion() {
         }
         const ms = ctx.createBufferSource(); ms.buffer = mBuf;
         const mf = ctx.createBiquadFilter(); mf.type = 'bandpass'; mf.frequency.value = 800; mf.Q.value = 3;
-        const mg = ctx.createGain(); mg.gain.value = 0.04;
+        const mg = ctx.createGain(); mg.gain.value = 0.15;
         ms.connect(mf); mf.connect(mg); mg.connect(master);
         ms.start(t + 0.05);
     } catch(e) {}
@@ -3313,14 +3366,13 @@ function sfxExplosion() {
 
 function sfxScan() {
     try {
-        if (_ttsPlaying) return;
         const ctx = getAudioCtx();
         const t = ctx.currentTime;
         const dur = 2.5;
-        const master = ctx.createGain(); master.gain.value = 0.04;
+        const master = ctx.createGain(); master.gain.value = 0.12;
         master.connect(ctx.destination);
         const rev = _makeReverb(ctx, 3, 1.5);
-        const revG = ctx.createGain(); revG.gain.value = 0.08;
+        const revG = ctx.createGain(); revG.gain.value = 0.25;
         master.connect(revG); revG.connect(rev); rev.connect(ctx.destination);
         const nBuf = ctx.createBuffer(1, ctx.sampleRate * dur, ctx.sampleRate);
         const nd = nBuf.getChannelData(0);
@@ -3360,7 +3412,6 @@ function sfxScan() {
 
 function sfxWhoosh() {
     try {
-        if (_ttsPlaying) return;
         const ctx = getAudioCtx();
         const t = ctx.currentTime;
         const len = ctx.sampleRate * 0.8;
@@ -3373,7 +3424,7 @@ function sfxWhoosh() {
         f.frequency.exponentialRampToValueAtTime(4000, t + 0.25);
         f.frequency.exponentialRampToValueAtTime(100, t + 0.8);
         const g = ctx.createGain(); g.gain.setValueAtTime(0, t);
-        g.gain.linearRampToValueAtTime(0.055, t + 0.1);
+        g.gain.linearRampToValueAtTime(0.2, t + 0.1);
         g.gain.exponentialRampToValueAtTime(0.001, t + 0.8);
         s.connect(f); f.connect(g); g.connect(ctx.destination); s.start(t);
     } catch(e) {}
@@ -3381,13 +3432,12 @@ function sfxWhoosh() {
 
 function sfxHeartbeat() {
     try {
-        if (_ttsPlaying) return;
         const ctx = getAudioCtx();
         const t = ctx.currentTime;
         const rev = _makeReverb(ctx, 3, 1);
-        const revG = ctx.createGain(); revG.gain.value = 0.04;
+        const revG = ctx.createGain(); revG.gain.value = 0.15;
         revG.connect(rev); rev.connect(ctx.destination);
-        [[0, 40, 0.1], [0.15, 32, 0.065], [0.35, 50, 0.06]].forEach(([off, freq, amp]) => {
+        [[0, 40, 0.35], [0.15, 32, 0.22], [0.35, 50, 0.2]].forEach(([off, freq, amp]) => {
             const o = ctx.createOscillator(); const g = ctx.createGain();
             o.type = 'sine'; o.frequency.value = freq;
             g.gain.setValueAtTime(0, t + off);
@@ -3441,7 +3491,7 @@ const QUESTIONS = [
         knowledge: {
             point: '<strong>逻辑推理</strong>与排序能力',
             now: '对应3年级<strong>「数学广角—推理」</strong>章节，是逻辑思维训练的核心题型',
-            future: '推理能力是4年级<strong>鸡兔同笼</strong>、5年级<strong>方程</strong>等高阶思维的基础，逻辑不通的孩子到高年级会越来越吃力',
+            future: '推理能力是4年级<strong>鸡兔同笼</strong>、4年级<strong>方程</strong>等高阶思维的基础，逻辑不通的孩子到高年级会越来越吃力',
         },
         video: 'https://maple-online.fbcontent.cn/public/release/trans/app-TUTOR_EXERCISE_SOLUTION_UPLOAD_VIDEO/e41d17ff-10a5-48ef-b66e-5cc13ad69093.mp4',
         poster: 'https://maple-online.fbcontent.cn/public/release/snapshot/app-TUTOR_EXERCISE_SOLUTION_UPLOAD_VIDEO/cab00bc4-07e5-47e5-92c7-4a55a9702583/066eedcc-4f62-4baf-a165-2a5bac2ff7c5-00001.jpg'
@@ -3486,7 +3536,7 @@ const QUESTIONS = [
         knowledge: {
             point: '<strong>倒推法</strong>与逆向思维能力',
             now: '对应3年级<strong>「解决问题」</strong>的逆向分析题型，是思维训练的重点和难点',
-            future: '倒推思维是4年级<strong>方程</strong>和5年级<strong>复杂应用题</strong>的核心策略，不会逆推的孩子遇到多步骤题就束手无策',
+            future: '倒推思维是4年级<strong>方程</strong>和4年级<strong>复杂应用题</strong>的核心策略，不会逆推的孩子遇到多步骤题就束手无策',
         },
         video: 'https://maple-online.fbcontent.cn/public/release/trans/app-TUTOR_EXERCISE_SOLUTION_UPLOAD_VIDEO/f570f6a9-e6c8-4789-8ecd-76829ef3c92d.mp4',
         poster: 'https://maple-online.fbcontent.cn/public/release/snapshot/app-TUTOR_EXERCISE_SOLUTION_UPLOAD_VIDEO/5eaac345-c790-49c7-ad39-1c07a98c0e97/eac55bfa-90da-4403-98be-a841c14e8cc1-00001.jpg'
@@ -3501,7 +3551,7 @@ const QUESTIONS = [
         knowledge: {
             point: '<strong>错中求解</strong>与加减法关系',
             now: '对应3年级<strong>「三位数加减法」</strong>的灵活应用，是各地真题的高频考点',
-            future: '错中求解训练的是<strong>分析变化量</strong>的能力，是4年级<strong>盈亏问题</strong>和5年级<strong>方程</strong>的思维基础',
+            future: '错中求解训练的是<strong>分析变化量</strong>的能力，是4年级<strong>盈亏问题</strong>和4年级<strong>方程</strong>的思维基础',
         },
         video: 'https://maple-online.fbcontent.cn/public/release/trans/app-TUTOR_EXERCISE_SOLUTION_UPLOAD_VIDEO/526a9534-3e48-4f26-a965-bb153cfa3eae.mp4',
         poster: 'https://maple-online.fbcontent.cn/public/release/snapshot/app-TUTOR_EXERCISE_SOLUTION_UPLOAD_VIDEO/ea4e2d04-689b-44b0-b357-6de6b0c36cf0/faf384f3-b99d-45b5-8d21-092218c6d160-00001.jpg'
@@ -3524,39 +3574,6 @@ const QUESTIONS = [
 ];
 
 const LETTERS = ['A', 'B', 'C', 'D'];
-
-// ==================== 工具函数 ====================
-// HTML转义，防止XSS注入
-function escapeHTML(str) {
-    const div = document.createElement('div');
-    div.appendChild(document.createTextNode(str));
-    return div.innerHTML;
-}
-
-// Toast提示（替代alert）
-function showToast(msg, duration) {
-    duration = duration || 2000;
-    let container = document.getElementById('toast-container');
-    if (!container) {
-        container = document.createElement('div');
-        container.id = 'toast-container';
-        container.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:99999;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:8px;';
-        document.body.appendChild(container);
-    }
-    const toast = document.createElement('div');
-    toast.style.cssText = 'background:rgba(0,0,0,0.78);color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:500;backdrop-filter:blur(8px);opacity:0;transform:translateY(8px);transition:all 0.3s ease;pointer-events:none;text-align:center;max-width:280px;';
-    toast.textContent = msg;
-    container.appendChild(toast);
-    requestAnimationFrame(function() {
-        toast.style.opacity = '1';
-        toast.style.transform = 'translateY(0)';
-    });
-    setTimeout(function() {
-        toast.style.opacity = '0';
-        toast.style.transform = 'translateY(-8px)';
-        setTimeout(function() { toast.remove(); }, 300);
-    }, duration);
-}
 
 // ==================== 路由判断 ====================
 // 答案编解码: 8个ABCD → 16bit → 4位hex短码
@@ -3628,48 +3645,10 @@ function getPlanParams() {
     } catch(e) { return null; }
 }
 
-// 返回按钮HTML（家长端/孩子端/规划页使用）
-function backBtnHTML() {
-    return '<button onclick="goBack()" style="position:fixed;top:12px;left:12px;z-index:100;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.3);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;" onmousedown="this.style.transform=\'scale(0.9)\'" onmouseup="this.style.transform=\'scale(1)\'">&#x2190;</button>';
-}
-function goBack() {
-    window.location.hash = '';
-    window.location.reload();
-}
-
-// 分享按钮HTML
-function shareBtnHTML() {
-    return '<button onclick="shareCurrentPage()" style="position:fixed;top:12px;right:52px;z-index:100;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.3);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.15);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;" onmousedown="this.style.transform=\'scale(0.9)\'" onmouseup="this.style.transform=\'scale(1)\'">&#x2197;</button>';
-}
-function shareCurrentPage() {
-    var url = window.location.href;
-    if (navigator.share) {
-        navigator.share({ title: document.title, url: url }).catch(function(){});
-    } else {
-        navigator.clipboard.writeText(url).then(function() {
-            showToast('链接已复制，可以发给朋友了');
-        }).catch(function() {
-            showToast('请手动复制地址栏链接');
-        });
-    }
-}
-
-// localStorage安全读写
-function safeGetItem(key) {
-    try { return localStorage.getItem(key); } catch(e) { return null; }
-}
-function safeSetItem(key, val) {
-    try { localStorage.setItem(key, val); return true; }
-    catch(e) { showToast('存储空间不足，部分数据可能无法保存'); return false; }
-}
-
-// 视频封面兜底
-var DEFAULT_POSTER = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="225" viewBox="0 0 400 225"><rect fill="#1a1a2e" width="400" height="225"/><text x="200" y="112" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="16" font-family="system-ui">点击播放视频</text><polygon points="185,95 185,130 215,112" fill="rgba(255,255,255,0.3)"/></svg>');
-
 function start() {
-    // 移除骨架屏
-    var sk = document.getElementById('skeleton');
-    if (sk) sk.remove();
+    if (window.__FORCE_HASH__ && !window.location.hash) {
+        window.location.hash = window.__FORCE_HASH__;
+    }
 
     const planName = getPlanParams();
     if (planName) { renderStudyPlan(planName); return; }
@@ -3683,24 +3662,9 @@ function start() {
     const params = getParams();
     if (params && params.name && params.answers) {
         renderSpaceReport(params);
-    } else if (window.location.hash && window.location.hash.length > 1) {
-        // hash存在但解析失败 — 链接无效
-        renderInvalidLink();
     } else {
         renderAdmin();
     }
-}
-
-function renderInvalidLink() {
-    const app = document.getElementById('app');
-    app.innerHTML = `
-        <div style="min-height:100vh;background:linear-gradient(180deg,#0f0c29,#302b63,#24243e);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;">
-            <div style="font-size:64px;margin-bottom:20px;">&#x26A0;&#xFE0F;</div>
-            <h2 style="color:#fff;font-size:20px;font-weight:700;margin-bottom:12px;">链接无效或已过期</h2>
-            <p style="color:rgba(255,255,255,0.6);font-size:14px;line-height:1.8;margin-bottom:30px;">该报告链接可能已失效，请联系老师重新生成。</p>
-            <button onclick="goBack()" style="padding:14px 36px;border-radius:12px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;font-size:15px;font-weight:600;border:none;cursor:pointer;">返回首页</button>
-        </div>
-    `;
 }
 
 // ==================== 老师端：录入页 ====================
@@ -3776,15 +3740,21 @@ function renderAdmin() {
             </button>
 
             <div class="result-box" id="resultBox">
-                <h3>&#x2705; 链接已生成</h3>
+                <h3>&#x2705; 报告已生成</h3>
+                <div style="margin-bottom:16px;padding:12px;background:rgba(102,126,234,0.1);border-radius:10px;border:1px solid rgba(102,126,234,0.3)">
+                    <div style="font-size:13px;color:#ccc;margin-bottom:8px;">&#x1F4E5; 下载报告文件（发给家长/孩子，永久有效）</div>
+                    <button class="copy-btn" style="background:linear-gradient(135deg,#667eea,#764ba2);margin-bottom:6px;width:100%;" onclick="downloadReport('child')">&#x1F4E5; 下载孩子报告文件</button>
+                    <button class="copy-btn" style="background:linear-gradient(135deg,#f093fb,#f5576c);width:100%;" onclick="downloadReport('parent')">&#x1F4E5; 下载家长报告文件</button>
+                    <div style="font-size:11px;color:#888;margin-top:8px;">下载的HTML文件可直接通过微信/QQ发送，对方打开即可查看，无需联网</div>
+                </div>
                 <div style="margin-bottom:12px">
-                    <div style="font-size:13px;color:#aaa;margin-bottom:4px">&#x1F680; 孩子端（星际探险）</div>
+                    <div style="font-size:13px;color:#aaa;margin-bottom:4px">&#x1F680; 孩子端链接（需联网访问）</div>
                     <div class="link-display" id="linkDisplay"></div>
                     <button class="copy-btn" id="copyBtn" onclick="copyLink('child')">&#x1F4CB; 复制孩子链接</button>
                     <button class="preview-btn" onclick="previewLink('child')">&#x1F440; 预览孩子端</button>
                 </div>
                 <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1)">
-                    <div style="font-size:13px;color:#aaa;margin-bottom:4px">&#x1F4CA; 家长端（AI诊断报告）</div>
+                    <div style="font-size:13px;color:#aaa;margin-bottom:4px">&#x1F4CA; 家长端链接（需联网访问）</div>
                     <div class="link-display" id="parentLinkDisplay"></div>
                     <button class="copy-btn" onclick="copyLink('parent')">&#x1F4CB; 复制家长链接</button>
                     <button class="preview-btn" onclick="previewLink('parent')">&#x1F440; 预览家长端</button>
@@ -3827,12 +3797,12 @@ let generatedParentLink = '';
 function generateLink() {
     const name = document.getElementById('studentName').value.trim();
     if (!name) {
-        showToast('请输入学生姓名');
+        alert('请输入学生姓名');
         document.getElementById('studentName').focus();
         return;
     }
     if (entryAnswers.some(a => a === -1)) {
-        showToast('请完成所有题目的答案录入');
+        alert('请完成所有题目的答案录入');
         return;
     }
 
@@ -3853,11 +3823,37 @@ function generateLink() {
     saveHistory({ name, correct: correctCount, link: generatedLink, parentLink: generatedParentLink, time: new Date().toLocaleString('zh-CN') });
 }
 
+function downloadReport(type) {
+    const name = document.getElementById('studentName').value.trim();
+    if (!name) { alert('请先生成报告'); return; }
+    const answersStr = entryAnswers.map(a => LETTERS[a]).join('');
+    const answersHex = encodeAnswers(answersStr);
+    const b64Name = btoa(unescape(encodeURIComponent(name))).replace(/=+$/, '').replace(/\+/g, '.').replace(/\//g, '_');
+    const hash = type === 'parent' ? 'P-' + b64Name + '-' + answersHex : 'Y-' + b64Name + '-' + answersHex;
+
+    const pageSource = document.documentElement.outerHTML;
+    const injectedHtml = '<!DOCTYPE html>\n<html lang="zh-CN">' +
+        pageSource.slice(pageSource.indexOf('<head')) .replace(
+            '</head>',
+            '<script>window.__FORCE_HASH__="' + hash + '";<\/script></head>'
+        );
+
+    const blob = new Blob([injectedHtml], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = name + (type === 'parent' ? '-家长报告' : '-孩子报告') + '.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
+
 function copyLink(type) {
     sfxClick();
     const link = type === 'parent' ? generatedParentLink : generatedLink;
     navigator.clipboard.writeText(link).then(() => {
-        showToast(type === 'parent' ? '家长端链接已复制' : '孩子端链接已复制');
+        alert(type === 'parent' ? '家长端链接已复制' : '孩子端链接已复制');
     }).catch(() => {
         const ta = document.createElement('textarea');
         ta.value = link;
@@ -3865,7 +3861,7 @@ function copyLink(type) {
         ta.select();
         document.execCommand('copy');
         document.body.removeChild(ta);
-        showToast(type === 'parent' ? '家长端链接已复制' : '孩子端链接已复制');
+        alert(type === 'parent' ? '家长端链接已复制' : '孩子端链接已复制');
     });
 }
 
@@ -3882,13 +3878,13 @@ function saveHistory(item) {
     const h = getHistory();
     h.unshift(item);
     if (h.length > 10) h.length = 10;
-    safeSetItem('quiz_history', JSON.stringify(h));
+    localStorage.setItem('quiz_history', JSON.stringify(h));
 }
 function deleteHistory(idx) {
     if (!confirm('确定删除这条记录？')) return;
     const h = getHistory();
     h.splice(idx, 1);
-    safeSetItem('quiz_history', JSON.stringify(h));
+    localStorage.setItem('quiz_history', JSON.stringify(h));
     renderAdmin();
 }
 
@@ -3896,8 +3892,163 @@ function copyHistoryLink(idx) {
     const h = getHistory();
     if (h[idx]) {
         navigator.clipboard.writeText(h[idx].link).catch(() => {});
-        showToast(h[idx].name + ' 的报告链接已复制');
+        alert(h[idx].name + ' 的报告链接已复制');
     }
+}
+
+// ==================== 家长端：报告页 ====================
+function renderReport(params) {
+    const { name, answers } = params;
+    const userAnswers = answers.split('').map(l => LETTERS.indexOf(l));
+
+    let correctCount = 0;
+    const results = QUESTIONS.map((q, idx) => {
+        const selected = userAnswers[idx];
+        const isCorrect = selected === q.answer;
+        if (isCorrect) correctCount++;
+        return { ...q, selected, isCorrect, selectedLetter: LETTERS[selected] };
+    });
+
+    const wrongCount = QUESTIONS.length - correctCount;
+    const score = Math.round((correctCount / QUESTIONS.length) * 100);
+
+    let encourageClass = 'good';
+    let encourageText = `<strong>${name}同学太棒了！</strong> 大部分题目都答对了，基础非常扎实！`;
+    if (score < 50) {
+        encourageClass = 'weak';
+        encourageText = `<strong>${name}同学加油！</strong> 基础还需要巩固，看完视频讲解会进步很快的！`;
+    } else if (score < 80) {
+        encourageClass = 'ok';
+        encourageText = `<strong>${name}同学表现不错！</strong> 有几道拔高题需要加强，看完视频讲解下次一定能全对！`;
+    }
+
+    const wrongItems = results.filter(r => !r.isCorrect);
+    const correctItems = results.filter(r => r.isCorrect);
+
+    const app = document.getElementById('app');
+    app.innerHTML = `
+        <div class="report-page">
+            <div class="rp-header">
+                <div class="logo-wrap">
+                    <img src="https://yfdpc.fbcontent.cn/s/logo-563d697805.svg" alt="猿辅导">
+                </div>
+                <h1>摸底测诊断报告</h1>
+                <div class="sub">新4年级 · 共${QUESTIONS.length}题 · AI智能诊断</div>
+                <div class="child-name">&#x1F393; ${name}同学</div>
+            </div>
+
+            <div class="score-card anim d1">
+                <div class="score-card-title">- 成绩总览 -</div>
+                <div class="score-row">
+                    <div class="s-item">
+                        <div class="s-num green">${correctCount}</div>
+                        <div class="s-label">答对</div>
+                    </div>
+                    <div class="s-divider"></div>
+                    <div class="s-item">
+                        <div class="s-num red">${wrongCount}</div>
+                        <div class="s-label">答错</div>
+                    </div>
+                    <div class="s-divider"></div>
+                    <div class="s-item">
+                        <div class="s-num orange">${score}<span style="font-size:16px;-webkit-text-fill-color:#aaa">分</span></div>
+                        <div class="s-label">综合得分</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="encourage ${encourageClass} anim d2">
+                <div class="emoji">${encourageClass === 'good' ? '&#x1F3C6;' : encourageClass === 'ok' ? '&#x1F4AA;' : '&#x1F4A1;'}</div>
+                <div class="text">${encourageText}</div>
+            </div>
+
+            ${wrongCount > 0 ? `
+                <div class="sec-title anim d3">&#x1F6A8; 闯关挑战·错题攻克 <span class="cnt">${wrongCount}题</span></div>
+                ${wrongItems.map(r => renderReportCard(r, true)).join('')}
+            ` : ''}
+
+            ${correctCount > 0 ? `
+                <div class="sec-title">&#x2B50; 通关成功 <span class="cnt green">${correctCount}题</span></div>
+                ${correctItems.map(r => renderReportCard(r, false)).join('')}
+            ` : ''}
+
+            <div class="unlock-section" id="unlockSection">
+                <div class="unlock-icon">${wrongCount > 0 ? '&#x1F512;' : '&#x1F389;'}</div>
+                <div class="unlock-title">${wrongCount > 0 ? '观看错题视频，解锁专属学习规划' : '全部通关，太厉害了！'}</div>
+                <div class="unlock-hint" id="unlockHint">${wrongCount > 0 ? '还有' + wrongCount + '道错题视频未观看' : '点击下方按钮查看你的专属学习规划'}</div>
+                ${wrongCount > 0 ? `
+                <div class="unlock-progress" id="unlockProgress">
+                    ${wrongItems.map(r => '<div class="up-dot" id="dot-' + r.id + '"></div>').join('')}
+                </div>` : ''}
+                <button class="unlock-btn ${wrongCount > 0 ? 'locked' : 'unlocked'}" id="unlockBtn" onclick="goToStudyPlan()" ${wrongCount > 0 ? 'disabled' : ''}>
+                    ${wrongCount > 0 ? '&#x1F512; 观看视频后解锁' : '&#x1F680; 查看专属学习规划'}
+                </button>
+                <div class="unlock-logo"><img src="https://yfdpc.fbcontent.cn/s/logo-563d697805.svg" alt="猿辅导"></div>
+            </div>
+
+            <div class="rp-footer">
+                <div class="emoji">&#x1F4AA;</div>
+                <div class="text">每道错题都是进步的阶梯！</div>
+                <div class="sub">加油，${name}小学霸！</div>
+                <div class="footer-logo"><img src="https://yfdpc.fbcontent.cn/s/logo-563d697805.svg" alt="猿辅导"></div>
+            </div>
+        </div>
+    `;
+
+    // 存储当前报告信息
+    window._reportName = name;
+    window._wrongIds = wrongItems.map(r => r.id);
+    window._watchedVideos = new Set();
+
+    // 错题默认展开第一个
+    if (wrongCount > 0) {
+        const firstWrong = document.querySelector('.rp-card.wrong .rc-header');
+        if (firstWrong) toggleCard(firstWrong);
+    }
+}
+
+function renderReportCard(r, isWrong) {
+    const stateClass = isWrong ? 'wrong' : 'correct';
+    return `
+        <div class="rp-card ${stateClass}">
+            <div class="rc-header" onclick="toggleCard(this)">
+                <div class="rc-left">
+                    <div class="rc-badge ${stateClass}">${r.id}</div>
+                    <span class="rc-tag ${r.tagClass}">${r.tag}</span>
+                </div>
+                <div class="rc-right">
+                    <span class="rc-status ${stateClass}">${isWrong ? '&#x274C; 答错' : '&#x2705; 答对'}</span>
+                    <span class="rc-arrow">&#x25BC;</span>
+                </div>
+            </div>
+            <div class="rc-body">
+                <div class="rc-qtext">${r.fullText}</div>
+                <div class="rc-answers">
+                    <span><span class="lbl">孩子答案：</span><span class="val ${stateClass}">${r.selectedLetter}. ${r.options[r.selected]}</span></span>
+                    ${isWrong ? `<span><span class="lbl">正确答案：</span><span class="val correct">${LETTERS[r.answer]}. ${r.options[r.answer]}</span></span>` : ''}
+                </div>
+                <div class="rc-analysis">
+                    <div class="rc-analysis-title">&#x1F4A1; 解题思路</div>
+                    <div class="rc-analysis-text">${r.analysis}</div>
+                </div>
+                ${r.knowledge ? `
+                <div class="rc-knowledge">
+                    <div class="rc-knowledge-title">&#x1F50D; 题目分析</div>
+                    <div class="rk-item"><div class="rk-icon point">&#x1F3AF;</div><div><strong>考察知识点：</strong>${r.knowledge.point}</div></div>
+                    <div class="rk-item"><div class="rk-icon now">&#x1F4D6;</div><div><strong>校内关联：</strong>${r.knowledge.now}</div></div>
+                    <div class="rk-item"><div class="rk-icon future">&#x26A0;&#xFE0F;</div><div><strong>后续影响：</strong>${r.knowledge.future}</div></div>
+                    <div class="rk-warn">&#x26A0; 该知识点是后续学习的重要基础，建议尽早巩固掌握</div>
+                </div>
+                ` : ''}
+                <div class="rc-video-label">&#x1F3AC; 名师视频讲解</div>
+                <div class="rc-video">
+                    ${r.video.endsWith('.mp4') ?
+                    '<video controls playsinline preload="none" poster="' + (r.poster||'') + '" ' + (isWrong ? 'onplay="markWatched(' + r.id + ')"' : '') + '><source src="' + r.video + '" type="video/mp4"></video>'
+                    : '<a href="' + r.video + '" target="_blank" style="display:flex;align-items:center;justify-content:center;height:200px;background:linear-gradient(135deg,#0f172a,#1e3a5f);border-radius:12px;text-decoration:none;color:#fff;font-size:16px;font-weight:600;letter-spacing:1px;gap:8px;" ' + (isWrong ? 'onclick="markWatched(' + r.id + ')"' : '') + '>&#x1F3AC; 点击观看视频讲解</a>'}
+                </div>
+            </div>
+        </div>
+    `;
 }
 
 function toggleCard(el) {
@@ -3906,24 +4057,9 @@ function toggleCard(el) {
     const arrow = el.querySelector('.rc-arrow');
     body.classList.toggle('open');
     arrow.classList.toggle('open');
-    // 展开时预加载视频metadata
-    if (body.classList.contains('open')) {
-        var video = body.querySelector('video');
-        if (video && video.preload === 'none') video.preload = 'metadata';
-    }
 }
 
 // ==================== 视频追踪 & 解锁 ====================
-// 检查视频观看进度，80%以上才标记为已观看
-function checkVideoProgress(video, id) {
-    if (!video.duration || video.duration === 0) return;
-    var progress = video.currentTime / video.duration;
-    if (progress >= 0.8) {
-        video.ontimeupdate = null;
-        markWatched(id);
-    }
-}
-
 function markWatched(id) {
     if (!window._watchedVideos) return;
     if (window._watchedVideos.has(id)) return;
@@ -3972,66 +4108,9 @@ function goToStudyPlan() {
     setTimeout(sfxCelebrate, 300);
 }
 
-function stripHTML(html) {
-    const div = document.createElement('div');
-    div.innerHTML = html || '';
-    return div.textContent || div.innerText || '';
-}
-
-function getLearningInsight(results, name) {
-    const wrongItems = results.filter(r => !r.isCorrect);
-    const dimCounts = {};
-    wrongItems.forEach(r => { dimCounts[r.dimension] = (dimCounts[r.dimension] || 0) + 1; });
-    const weakDims = Object.entries(dimCounts).sort((a, b) => b[1] - a[1]).map(([dim, count]) => ({ dim, count }));
-    const focusItems = wrongItems.slice(0, 3).map(r => ({
-        id: r.id,
-        dim: r.dimension,
-        tag: r.tag,
-        point: stripHTML(r.knowledge && r.knowledge.point ? r.knowledge.point : r.tag)
-    }));
-    const mainWeak = weakDims[0] ? weakDims[0].dim : '综合能力';
-    const summary = wrongItems.length > 0
-        ? `${escapeHTML(name)}同学本次主要薄弱点集中在「${mainWeak}」${weakDims.length > 1 ? '，同时需要关注「' + weakDims.slice(1, 3).map(w => w.dim).join('」「') + '」' : ''}。`
-        : `${escapeHTML(name)}同学本次基础表现很稳，可以进入更高阶的综合训练。`;
-    return { wrongItems, weakDims, focusItems, mainWeak, summary };
-}
-
-function savePlanFocus(name, insight) {
-    window._planFocus = insight;
-    try {
-        localStorage.setItem('plan_focus_' + name, JSON.stringify({
-            weakDims: insight.weakDims,
-            focusItems: insight.focusItems,
-            mainWeak: insight.mainWeak
-        }));
-    } catch(e) {}
-}
-
-function loadPlanFocus(name) {
-    if (window._planFocus) return window._planFocus;
-    try {
-        return JSON.parse(localStorage.getItem('plan_focus_' + name) || 'null');
-    } catch(e) { return null; }
-}
-
 // ==================== 学习规划独立页面 ====================
 function renderStudyPlan(name) {
     const app = document.getElementById('app');
-    const planFocus = loadPlanFocus(name);
-    const priorityHTML = planFocus && planFocus.focusItems && planFocus.focusItems.length > 0
-        ? planFocus.focusItems.map((item, idx) => `
-            <div class="sp-node">
-                <div class="sp-dot ${idx === 0 ? 'orange' : idx === 1 ? 'purple' : 'teal'}"></div>
-                <div class="sp-card">
-                    <div class="sp-card-top">
-                        <div class="sp-badge math">&#x1F3AF; 优先巩固</div>
-                        <div class="sp-card-title">第${idx + 1}优先级：${item.point}</div>
-                    </div>
-                    <div class="sp-card-desc">来自第${item.id}题「${item.tag}」，先把这个知识点补稳，再进入后面的系统课。</div>
-                </div>
-            </div>
-        `).join('')
-        : '';
 
     const confettiColors = ['#667eea','#764ba2','#f97316','#4ade80','#f472b6','#fbbf24','#38bdf8','#a78bfa'];
     let confettiHTML = '';
@@ -4046,28 +4125,29 @@ function renderStudyPlan(name) {
     }
 
     app.innerHTML = `
-        ${backBtnHTML()}${shareBtnHTML()}
         <div class="plan-page page">
             <div class="plan-header">
                 <div class="confetti-container">${confettiHTML}</div>
-                <div class="plan-brand">猿辅导 · 小猿成长计划</div>
-                <div class="emoji-big">${MASCOT_SVG_MD}</div>
-                <h1>恭喜${escapeHTML(name)}同学<br>错题复习完成！</h1>
+                <div style="position:relative;z-index:1;margin-bottom:10px;">
+                    <img src="https://yfdpc.fbcontent.cn/s/logo-563d697805.svg" alt="猿辅导" style="height:30px;filter:brightness(0) invert(1);opacity:0.85;">
+                </div>
+                <div class="emoji-big">&#x1F389;</div>
+                <h1>恭喜${name}同学<br>错题复习完成！</h1>
                 <div class="plan-sub">接下来，开启你的专属提升之旅</div>
             </div>
 
             <div class="plan-achieve anim d1">
                 <div class="pa-icon">&#x1F3C6;</div>
                 <div class="pa-text">全部错题已攻克<br>成功解锁「专属学习规划」</div>
-                <div class="pa-sub">猿辅导AI根据${escapeHTML(name)}同学的诊断结果，量身定制以下课程</div>
+                <div class="pa-sub">猿辅导AI根据${name}同学的诊断结果，量身定制以下课程</div>
             </div>
 
             <div class="plan-body">
                 <div class="study-plan" style="margin:0 16px;">
                     <div class="sp-intro">
                         <div class="sp-icon">&#x1F680;</div>
-                        <h3>${escapeHTML(name)}同学的提升计划</h3>
-                        <div class="sp-sub">${planFocus && planFocus.mainWeak ? '优先补强：' + planFocus.mainWeak + ' · ' : ''}核心课 + 英语录播 + 专属1v1辅导</div>
+                        <h3>${name}同学的提升计划</h3>
+                        <div class="sp-sub">6节核心课 + 英语录播 + 专属1v1辅导</div>
                     </div>
                     <div class="sp-timeline">
                         <div class="sp-node">
@@ -4080,7 +4160,6 @@ function renderStudyPlan(name) {
                                 <div class="sp-card-desc">你的专属学习管家，有问题随时问！学习路上不再孤单</div>
                             </div>
                         </div>
-                        ${priorityHTML}
                         <div class="sp-node">
                             <div class="sp-dot blue"></div>
                             <div class="sp-card">
@@ -4106,9 +4185,9 @@ function renderStudyPlan(name) {
                             <div class="sp-card">
                                 <div class="sp-card-top">
                                     <div class="sp-badge math">&#x1F537; 数学</div>
-                                    <div class="sp-card-title">第三节核心课：【应用】一招搞定应用题</div>
+                                    <div class="sp-card-title">第三节核心课：【几何】犬牙的奥秘</div>
                                 </div>
-                                <div class="sp-card-desc">掌握核心解题策略，应用题不再头疼，轻松拿满分！</div>
+                                <div class="sp-card-desc">探索图形的秘密，一眼看穿几何题的解题关键！</div>
                             </div>
                         </div>
                         <div class="sp-node">
@@ -4116,9 +4195,9 @@ function renderStudyPlan(name) {
                             <div class="sp-card">
                                 <div class="sp-card-top">
                                     <div class="sp-badge math">&#x1F9E0; 数学</div>
-                                    <div class="sp-card-title">第四节核心课：【几何】图形思维巧通关</div>
+                                    <div class="sp-card-title">第四节核心课：【应用】鸡兔同笼</div>
                                 </div>
-                                <div class="sp-card-desc">探索图形的秘密，一眼看穿几何题的解题关键！</div>
+                                <div class="sp-card-desc">经典思维名题，掌握假设法，复杂应用题迎刃而解！</div>
                             </div>
                         </div>
                         <div class="sp-node">
@@ -4126,9 +4205,9 @@ function renderStudyPlan(name) {
                             <div class="sp-card">
                                 <div class="sp-card-top">
                                     <div class="sp-badge math">&#x1F3AF; 数学</div>
-                                    <div class="sp-card-title">第五节核心课：【思维】审题能力大闯关</div>
+                                    <div class="sp-card-title">第五节核心课：【思维】一招搞定消长问题</div>
                                 </div>
-                                <div class="sp-card-desc">学会精准审题，避开陷阱不丢分，考试稳拿高分！</div>
+                                <div class="sp-card-desc">此消彼长有规律，掌握核心方法，难题一招秒解！</div>
                             </div>
                         </div>
                         <div class="sp-node">
@@ -4136,9 +4215,9 @@ function renderStudyPlan(name) {
                             <div class="sp-card">
                                 <div class="sp-card-top">
                                     <div class="sp-badge chinese">&#x1F4D6; 语文</div>
-                                    <div class="sp-card-title">第六节核心课：【阅读】3步归因精准评价人物</div>
+                                    <div class="sp-card-title">第六节核心课：【阅读】两大方法搞定概括</div>
                                 </div>
-                                <div class="sp-card-desc">三步归因法，精准评价人物形象，阅读理解答题有章法！</div>
+                                <div class="sp-card-desc">阅读理解有方法，两招搞定段落概括，答题又快又准！</div>
                             </div>
                         </div>
                         <div class="sp-node">
@@ -4146,9 +4225,9 @@ function renderStudyPlan(name) {
                             <div class="sp-card">
                                 <div class="sp-card-top">
                                     <div class="sp-badge english">&#x1F30D; 英语</div>
-                                    <div class="sp-card-title">英语录播解锁：【趣味阅读】海岛新奇见闻</div>
+                                    <div class="sp-card-title">英语录播解锁：【难点解析】小学核心语法避坑及写作训练</div>
                                 </div>
-                                <div class="sp-card-desc">趣味英语阅读，跟着探险家一起发现海岛的新奇世界！</div>
+                                <div class="sp-card-desc">语法不再踩坑，写作稳拿高分，英语成绩轻松提升！</div>
                             </div>
                         </div>
                     </div>
@@ -4159,8 +4238,8 @@ function renderStudyPlan(name) {
             </div>
 
             <div class="plan-footer">
-                <div class="pf-brand">猿辅导</div>
-                <div class="pf-text">猿辅导 · 与${escapeHTML(name)}同学一起成长</div>
+                <img src="https://yfdpc.fbcontent.cn/s/logo-563d697805.svg" alt="猿辅导">
+                <div class="pf-text">猿辅导 · 与${name}同学一起成长</div>
             </div>
         </div>
     `;
@@ -4294,20 +4373,9 @@ function buildShipSVG(w, h, pfx) {
 </g>
 </svg>`;
 }
-// 惰性生成SVG，避免页面加载时一次性构建所有尺寸
-let _shipCache = {};
-function getShipSVG(size) {
-    if (!_shipCache[size]) {
-        if (size === 'lg') _shipCache[size] = buildShipSVG(380, 420, 'lg');
-        else if (size === 'md') _shipCache[size] = buildShipSVG(200, 220, 'md');
-        else _shipCache[size] = buildShipSVG(100, 110, 'sm');
-    }
-    return _shipCache[size];
-}
-// 保持向后兼容的getter
-Object.defineProperty(window, 'SHIP_SVG_LG', { get: function() { return getShipSVG('lg'); } });
-Object.defineProperty(window, 'SHIP_SVG_MD', { get: function() { return getShipSVG('md'); } });
-Object.defineProperty(window, 'SHIP_SVG_SM', { get: function() { return getShipSVG('sm'); } });
+const SHIP_SVG_LG = buildShipSVG(380, 420, 'lg');
+const SHIP_SVG_MD = buildShipSVG(200, 220, 'md');
+const SHIP_SVG_SM = buildShipSVG(100, 110, 'sm');
 
 function buildMascotSVG(size, pfx) {
     return `<svg width="${size}" height="${size}" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" aria-label="小猿宇航员助手">
@@ -4376,18 +4444,10 @@ function buildMascotSVG(size, pfx) {
 </g>
 </svg>`;
 }
-let _mascotCache = {};
-function getMascotSVG(size) {
-    if (!_mascotCache[size]) {
-        if (size === 'lg') _mascotCache[size] = buildMascotSVG(128, 'mascotLg');
-        else if (size === 'md') _mascotCache[size] = buildMascotSVG(88, 'mascotMd');
-        else _mascotCache[size] = buildMascotSVG(48, 'mascotSm');
-    }
-    return _mascotCache[size];
-}
-Object.defineProperty(window, 'MASCOT_SVG_LG', { get: function() { return getMascotSVG('lg'); } });
-Object.defineProperty(window, 'MASCOT_SVG_MD', { get: function() { return getMascotSVG('md'); } });
-Object.defineProperty(window, 'MASCOT_SVG_SM', { get: function() { return getMascotSVG('sm'); } });
+const MASCOT_SVG_LG = buildMascotSVG(128, 'mascotLg');
+const MASCOT_SVG_MD = buildMascotSVG(88, 'mascotMd');
+const MASCOT_SVG_SM = buildMascotSVG(48, 'mascotSm');
+
 
 let _energy = 0;
 let _repairedIds = new Set();
@@ -4403,23 +4463,116 @@ function renderSpaceReport(params) {
         const isCorrect = selected === q.answer;
         return { ...q, selected, isCorrect, selectedLetter: LETTERS[selected] };
     });
-    savePlanFocus(name, getLearningInsight(results, name));
     _spaceWrongItems = results.filter(r => !r.isCorrect);
     _repairedIds = new Set();
     _energy = 0;
+    savePlanFocus(name, getLearningInsight(results, name));
 
     if (_spaceWrongItems.length === 0) {
         showCompletion(name, 0);
         return;
     }
 
-    showStartScreen(name);
+    if (repairGatePassed()) {
+        showStartScreen(name);
+    } else {
+        showRepairGate(name);
+    }
 }
 
-function showStartScreen(name) {
+
+function stripHTML(html) {
+    const div = document.createElement('div');
+    div.innerHTML = html || '';
+    return div.textContent || div.innerText || '';
+}
+
+function getLearningInsight(results, name) {
+    const wrongItems = results.filter(r => !r.isCorrect);
+    const dimCounts = {};
+    wrongItems.forEach(r => { dimCounts[r.dimension] = (dimCounts[r.dimension] || 0) + 1; });
+    const weakDims = Object.entries(dimCounts).sort((a, b) => b[1] - a[1]).map(([dim, count]) => ({ dim, count }));
+    const focusItems = wrongItems.slice(0, 3).map(r => ({
+        id: r.id,
+        dim: r.dimension,
+        tag: r.tag,
+        point: stripHTML(r.knowledge && r.knowledge.point ? r.knowledge.point : r.tag)
+    }));
+    const mainWeak = weakDims[0] ? weakDims[0].dim : '综合能力';
+    const summary = wrongItems.length > 0
+        ? `${name}同学本次主要薄弱点集中在「${mainWeak}」${weakDims.length > 1 ? '，同时需要关注「' + weakDims.slice(1, 3).map(w => w.dim).join('」「') + '」' : ''}。`
+        : `${name}同学本次基础表现很稳，可以进入更高阶的综合训练。`;
+    return { wrongItems, weakDims, focusItems, mainWeak, summary };
+}
+
+function savePlanFocus(name, insight) {
+    window._planFocus = insight;
+    try {
+        localStorage.setItem('plan_focus_' + name, JSON.stringify({
+            weakDims: insight.weakDims,
+            focusItems: insight.focusItems,
+            mainWeak: insight.mainWeak
+        }));
+    } catch(e) {}
+}
+
+function loadPlanFocus(name) {
+    if (window._planFocus) return window._planFocus;
+    try {
+        return JSON.parse(localStorage.getItem('plan_focus_' + name) || 'null');
+    } catch(e) { return null; }
+}
+
+function repairGateKey() {
+    return 'repair_gate_seen_' + (window.location.pathname || '') + (window.location.search || '') + (window.location.hash || 'entry');
+}
+
+let _repairGatePassKey = '';
+function repairGatePassed() {
+    return _repairGatePassKey === repairGateKey();
+}
+
+function markRepairGatePassed() {
+    _repairGatePassKey = repairGateKey();
+}
+
+function isMobileFastMode() {
+    return window.matchMedia('(max-width: 640px)').matches || /MicroMessenger|WeChat|wxwork|Mobile/i.test(navigator.userAgent);
+}
+
+function showRepairGate(name) {
+    const app = document.getElementById('app');
+    const wrongCount = _spaceWrongItems.length;
+    app.innerHTML = `
+        <div class="repair-gate">
+            <div class="repair-gate-content">
+                <div class="repair-gate-kicker">新4年级摸底测</div>
+                <h1>错题修复</h1>
+                <div class="repair-gate-desc">${name}同学，先确认本次需要修复的错题，再进入小猿任务。</div>
+                <div class="repair-gate-stats">
+                    <div class="repair-gate-stat"><strong>${QUESTIONS.length}</strong><span>总题数</span></div>
+                    <div class="repair-gate-stat"><strong>${wrongCount}</strong><span>待修复</span></div>
+                    <div class="repair-gate-stat"><strong>${Math.max(0, QUESTIONS.length - wrongCount)}</strong><span>已掌握</span></div>
+                </div>
+                <button class="repair-gate-btn" onpointerdown="playReadyVoiceNow()" ontouchstart="playReadyVoiceNow()" onclick="enterStartScreen()">开始错题修复</button>
+            </div>
+        </div>
+    `;
+}
+
+function enterStartScreen() {
+    markRepairGatePassed();
+    const readyVoice = playReadyVoiceNow();
+    showStartScreen(_spaceName, { autoIntro: true });
+    startSpaceIntro(false, 0, readyVoice);
+}
+
+function showStartScreen(name, opts) {
+    opts = opts || {};
     const app = document.getElementById('app');
     let asteroidsHTML = '';
-    for (let i = 0; i < 6; i++) {
+    const asteroidCount = isMobileFastMode() ? 2 : 6;
+    for (let i = 0; i < asteroidCount; i++) {
         const size = 4 + Math.random() * 10;
         const top = 10 + Math.random() * 80;
         const left = 5 + Math.random() * 90;
@@ -4429,8 +4582,8 @@ function showStartScreen(name) {
         asteroidsHTML += `<div class="start-asteroid" style="width:${size}px;height:${size*0.7}px;top:${top}%;left:${left}%;opacity:${opacity};animation-duration:${dur}s;animation-delay:${delay}s;"></div>`;
     }
     app.innerHTML = `
-        <div class="start-bg" id="startScreen" onclick="handleStartClick(event)">
-            <img class="start-bg-img" src="assets/space-mission-xiaoyuan.jpg" alt="" fetchpriority="high" decoding="async">
+        <div class="start-bg ${opts.autoIntro ? 'auto-intro' : ''}" id="startScreen" onclick="handleStartClick(event)">
+            <img class="start-bg-img" src="assets/mobile/kid-launch.jpg" alt="" fetchpriority="high" decoding="async" onerror="this.onerror=null;this.src='assets/kid-launch.png';">
             <div class="start-stars-1"></div>
             <div class="start-stars-2"></div>
             <div class="start-stars-3"></div>
@@ -4454,7 +4607,7 @@ function showStartScreen(name) {
                 <div class="start-title" style="margin-top:24px;">
                     <div class="start-sub1">小猿宇航员已就位</div>
                     <h1>错题修复大冒险</h1>
-                    <div class="start-sub2">${escapeHTML(name)}同学，和小猿一起把飞船修好</div>
+                    <div class="start-sub2">${name}同学，和小猿一起把飞船修好</div>
                     <div class="mission-chips"><span>看讲解</span><span>修故障</span><span>解锁计划</span></div>
                 </div>
                 <div class="start-btn-wrap" style="margin-top:36px;">
@@ -4470,6 +4623,10 @@ function showStartScreen(name) {
 
 let _startLaunching = false;
 function handleStartClick(e) {
+    startSpaceIntro(true);
+}
+
+function startSpaceIntro(playReadyVoice, delayMs, waitFor) {
     if (_startLaunching) return;
     _startLaunching = true;
     const wrap = document.getElementById('startShipWrap');
@@ -4479,37 +4636,40 @@ function handleStartClick(e) {
         if (ctx.state === 'suspended') ctx.resume();
         playTone(440, 0.01, 'sine', 0.01);
     } catch(e) {}
-    try {
-        if (window.speechSynthesis) {
-            window.speechSynthesis.getVoices();
-            const u = new SpeechSynthesisUtterance('');
-            u.volume = 0;
-            window.speechSynthesis.speak(u);
-        }
-    } catch(e) {}
-    setTimeout(function() {
-        _startLaunching = false;
-        showSpaceIntro(_spaceName);
-    }, 1400);
+    const ready = waitFor || (playReadyVoice ? playReadyVoiceNow() : Promise.resolve());
+    ready.then(function() {
+        setTimeout(function() {
+            _startLaunching = false;
+            showSpaceIntro(_spaceName);
+        }, delayMs || 0);
+    });
 }
 
+function unlockAndStart() { handleStartClick(); }
 
 let _cinemaTimer = null;
 let _ttsPlaying = false;
 let _ttsToken = 0;
-const VOICE_OPENING = "https://lf3-doubao-sign.bytescm.com/obj/tts-online/1746686666666_1746686666666_1.mp3";
-const VOICE_ERROR = "https://lf3-doubao-sign.bytescm.com/obj/tts-online/1746686666666_1746686666666_2.mp3";
-const VOICE_GUIDE = "https://lf3-doubao-sign.bytescm.com/obj/tts-online/1746686666666_1746686666666_3.mp3";
+const VOICE_READY = "assets/audio/01_ready_xiaoyuan.mp3";
+const VOICE_OPENING = "assets/audio/02_launch_xiaoyuan.mp3";
+const VOICE_ERROR = "assets/audio/03_alert_xiaoyuan.mp3";
+const VOICE_IMPACT = "assets/audio/04_impact_xiaoyuan.mp3";
+const VOICE_GUIDE = "assets/audio/05_repair_xiaoyuan.mp3";
+const VOICE_SUCCESS = "assets/audio/06_success_xiaoyuan.mp3";
 const SOUND_ENGINE = "";
 const SOUND_ALARM = "";
 let _currentVoiceAudio = null;
 let _ambientAudio = null;
+let _readyVoiceStarted = false;
+let _lastReadyVoiceError = '';
+let _readyVoicePromise = null;
+const READY_VOICE_FALLBACK_MS = 12500;
 
 function createVoiceAudio(src) {
     if (!src) return null;
     try {
         const audio = new Audio(src);
-        audio.preload = 'auto';
+        audio.preload = 'none';
         audio.crossOrigin = 'anonymous';
         audio.volume = 0.9;
         return audio;
@@ -4519,13 +4679,64 @@ function createVoiceAudio(src) {
 }
 
 const voiceAudio = {
+    ready: createVoiceAudio(VOICE_READY),
     opening: createVoiceAudio(VOICE_OPENING),
     error: createVoiceAudio(VOICE_ERROR),
-    guide: createVoiceAudio(VOICE_GUIDE)
+    impact: createVoiceAudio(VOICE_IMPACT),
+    guide: createVoiceAudio(VOICE_GUIDE),
+    success: createVoiceAudio(VOICE_SUCCESS)
 };
 
+function playReadyVoiceNow() {
+    if (_readyVoicePromise) return _readyVoicePromise;
+    _readyVoiceStarted = true;
+    _lastReadyVoiceError = '';
+    _readyVoicePromise = new Promise(resolve => {
+        let done = false;
+        let safetyTimer = null;
+        function finish(reason) {
+            if (done) return;
+            done = true;
+            clearTimeout(safetyTimer);
+            _readyVoiceStarted = false;
+            _readyVoicePromise = null;
+            resolve(reason || 'done');
+        }
+        try {
+            stopVoiceAudio();
+            const audio = new Audio(VOICE_READY);
+            audio.preload = 'auto';
+            audio.volume = 0.9;
+            audio.onended = function() {
+                if (_currentVoiceAudio === audio) _currentVoiceAudio = null;
+                finish('ended');
+            };
+            audio.onerror = function() {
+                _lastReadyVoiceError = 'audio-error';
+                if (_currentVoiceAudio === audio) _currentVoiceAudio = null;
+                finish('error');
+            };
+            _currentVoiceAudio = audio;
+            safetyTimer = setTimeout(function() { finish('timeout'); }, READY_VOICE_FALLBACK_MS + 2500);
+            try { audio.load(); } catch(e) {}
+            const p = audio.play();
+            if (p && p.catch) {
+                p.catch(function(err) {
+                    _lastReadyVoiceError = err && (err.name || err.message) ? (err.name || err.message) : 'play-rejected';
+                    if (_currentVoiceAudio === audio) _currentVoiceAudio = null;
+                    setTimeout(function() { finish('rejected'); }, READY_VOICE_FALLBACK_MS);
+                });
+            }
+        } catch(e) {
+            _lastReadyVoiceError = e && (e.name || e.message) ? (e.name || e.message) : 'play-failed';
+            finish('failed');
+        }
+    });
+    return _readyVoicePromise;
+}
+
 function stopVoiceAudio() {
-    [_currentVoiceAudio, voiceAudio.opening, voiceAudio.error, voiceAudio.guide].forEach(audio => {
+    [_currentVoiceAudio].concat(Object.values(voiceAudio)).forEach(audio => {
         if (!audio) return;
         try {
             audio.pause();
@@ -4562,7 +4773,7 @@ function playVoiceMp3(audio, fallbackMs) {
     return new Promise(resolve => {
         if (!audio) { resolve(false); return; }
         let done = false;
-        let maxTimer = null;
+        let safetyTimer = null;
         const startupTimer = setTimeout(function() {
             finish(false);
         }, 2000);
@@ -4572,7 +4783,7 @@ function playVoiceMp3(audio, fallbackMs) {
             audio.onplaying = null;
             audio.oncanplay = null;
             clearTimeout(startupTimer);
-            clearTimeout(maxTimer);
+            clearTimeout(safetyTimer);
         }
         function finish(ok) {
             if (done) return;
@@ -4587,15 +4798,17 @@ function playVoiceMp3(audio, fallbackMs) {
         }
         function markStarted() {
             clearTimeout(startupTimer);
-            if (!maxTimer) {
-                const limit = Math.min(9000, Math.max(2600, (audio.duration && isFinite(audio.duration) ? audio.duration * 1000 + 800 : fallbackMs || 9000)));
-                maxTimer = setTimeout(function() { finish(false); }, limit);
+            if (!safetyTimer) {
+                const knownMs = audio.duration && isFinite(audio.duration) ? audio.duration * 1000 : 0;
+                const limit = Math.max(12000, knownMs + 4000, (fallbackMs || 12000) + 4000);
+                safetyTimer = setTimeout(function() { finish(false); }, limit);
             }
         }
         try {
             stopVoiceAudio();
             _currentVoiceAudio = audio;
             audio.volume = 0.9;
+            try { if (audio.readyState < 2) audio.load(); } catch(e) {}
             audio.currentTime = 0;
             audio.onended = function() { finish(true); };
             audio.onerror = function() { finish(false); };
@@ -4618,63 +4831,14 @@ function robotSpeak(text, opts) {
             setMascotSpeaking(true);
             setTtsActive(true);
             playVoiceMp3(opts.audio, mp3Ms).then(function(ok) {
-                if (ok) {
-                    setMascotSpeaking(false);
-                    setTtsActive(false);
-                    resolve();
-                } else {
-                    robotSpeak(text, { rate: opts.rate, pitch: opts.pitch, volume: opts.volume, fallbackMs: opts.fallbackMs }).then(resolve);
-                }
+                setMascotSpeaking(false);
+                setTtsActive(false);
+                if (!ok) setTimeout(resolve, Math.min(900, mp3Ms));
+                else resolve();
             });
             return;
         }
-        if (!window.speechSynthesis) { resolve(); return; }
-        const token = ++_ttsToken;
-        window.speechSynthesis.cancel();
-        const voices = window.speechSynthesis.getVoices();
-        const prefer = voices.find(v => v.lang === 'zh-CN' && /male|boy|child|yunxi|xiaoyi|kangkang|小艺|云希|男|童|普通话|mandarin/i.test(v.name))
-            || voices.find(v => v.lang.startsWith('zh') && /male|boy|child|yunxi|xiaoyi|kangkang|小艺|云希|男|童|普通话|mandarin/i.test(v.name))
-            || voices.find(v => v.lang === 'zh-CN' && v.localService)
-            || voices.find(v => v.lang === 'zh-CN')
-            || voices.find(v => v.lang.startsWith('zh'));
-        const chunks = splitTtsText(text);
-        let idx = 0;
-        let finished = false;
-        const fallbackMs = Math.min(9000, Math.max(2600, text.length * 190));
-        const fallbackTimer = setTimeout(function() {
-            finish();
-        }, fallbackMs);
-        function finish() {
-            if (finished) return;
-            finished = true;
-            clearTimeout(fallbackTimer);
-            try { window.speechSynthesis.cancel(); } catch(e) {}
-            setMascotSpeaking(false);
-            setTtsActive(false);
-            resolve();
-        }
-        setMascotSpeaking(true);
-        setTtsActive(true);
-        function speakNext() {
-            if (finished || token !== _ttsToken) return;
-            if (idx >= chunks.length) {
-                finish();
-                return;
-            }
-            const chunk = chunks[idx++];
-            const u = new SpeechSynthesisUtterance(chunk.text);
-            u.lang = 'zh-CN';
-            u.rate = opts.rate || 1.02;
-            u.pitch = opts.pitch || 1.15;
-            u.volume = opts.volume || 0.85;
-            if (prefer) u.voice = prefer;
-            u.onend = function() { setTimeout(speakNext, chunk.pause); };
-            u.onerror = function() {
-                finish();
-            };
-            window.speechSynthesis.speak(u);
-        }
-        speakNext();
+        setTimeout(resolve, mp3Ms);
     } catch(e) { resolve(); }
     });
 }
@@ -4697,10 +4861,8 @@ document.addEventListener('visibilitychange', function() {
     if (cinema) cinema.classList.toggle('paused', document.hidden);
     if (document.hidden) {
         try { _currentVoiceAudio && _currentVoiceAudio.pause(); } catch(e) {}
-        try { window.speechSynthesis && window.speechSynthesis.pause(); } catch(e) {}
     } else {
         try { _currentVoiceAudio && _currentVoiceAudio.play(); } catch(e) {}
-        try { window.speechSynthesis && window.speechSynthesis.resume(); } catch(e) {}
     }
 });
 
@@ -4777,7 +4939,7 @@ function showSpaceIntro(name) {
             <div class="cinema-sub" id="cinemaSub"></div>
 
             <div class="cinema-scene s1-bg active" id="scene1">
-                <img class="cinema-bg-img" src="assets/cinema-cockpit-calm.jpg" alt="" fetchpriority="high" decoding="async">
+                <img class="cinema-bg-img" src="assets/mobile/kid-calm-space.jpg" alt="" fetchpriority="high" decoding="async" onerror="this.onerror=null;this.src='assets/kid-calm-space.png';">
                 <div class="cinema-stars flow"></div>
                 <div class="s1-nebula" style="top:15%;left:-10%;"></div>
                 <div class="s1-nebula" style="top:55%;right:-15%;width:250px;height:250px;"></div>
@@ -4789,7 +4951,7 @@ function showSpaceIntro(name) {
             </div>
 
             <div class="cinema-scene s2-bg" id="scene2">
-                <img class="cinema-bg-img" src="assets/cinema-cockpit-fault.jpg" alt="" fetchpriority="high" decoding="async">
+                <img class="cinema-bg-img" src="assets/mobile/kid-asteroid-alert.jpg" alt="" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='assets/kid-asteroid-alert.png';">
                 <div class="cinema-stars"></div>
                 <div class="cinema-vignette" style="background:radial-gradient(ellipse at center, transparent 30%, rgba(5,0,20,0.7) 100%);"></div>
                 <div class="s2-storm">${lightningsHTML}${particlesHTML}${smokeHTML}${embersHTML}</div>
@@ -4799,7 +4961,15 @@ function showSpaceIntro(name) {
             </div>
 
             <div class="cinema-scene s3-bg" id="scene3">
-                <img class="cinema-bg-img" src="assets/cinema-cockpit-guide.jpg" alt="" fetchpriority="high" decoding="async">
+                <img class="cinema-bg-img" src="assets/mobile/kid-repair-action.jpg" alt="" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='assets/kid-repair-action.png';">
+                <div class="cinema-stars"></div>
+                <div class="cinema-vignette" style="background:radial-gradient(ellipse at center, transparent 26%, rgba(60,7,7,0.64) 100%);"></div>
+                <div class="s2-storm">${lightningsHTML}${particlesHTML}${smokeHTML}${embersHTML}</div>
+                <div class="s2-flash"></div>
+            </div>
+
+            <div class="cinema-scene s4-bg" id="scene4">
+                <img class="cinema-bg-img" src="assets/mobile/kid-holo-guide.jpg" alt="" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='assets/kid-holo-guide.png';">
                 <div class="cinema-stars"></div>
                 <div class="cinema-vignette"></div>
                 ${dustHTML}
@@ -4809,16 +4979,9 @@ function showSpaceIntro(name) {
                     <button class="cinema-enter" onclick="skipCinema()" style="margin-top:0;width:100%;">开始修复</button>
                 </div>
             </div>
-            <div class="cinema-mascot-host" id="cinemaMascotHost">
-                <div class="cinema-mascot-bubble" id="mascotSpeech">我是小猿，准备带你完成修复任务！</div>
-                <div class="cinema-mascot-face"><div class="cinema-photo-mascot" aria-label="小猿猴子宇航员"></div>${MASCOT_SVG_MD}</div>
-                <div class="cinema-holo-column"></div>
-                <div class="cinema-holo-platform"></div>
-            </div>
         </div>
     `;
 
-    if (window.speechSynthesis) window.speechSynthesis.getVoices();
     runCinema(name, faultCount, shipId);
 }
 
@@ -4827,7 +4990,8 @@ function runCinema(name, faultCount, shipId) {
     const scenes = [
         document.getElementById('scene1'),
         document.getElementById('scene2'),
-        document.getElementById('scene3')
+        document.getElementById('scene3'),
+        document.getElementById('scene4')
     ];
 
     function showSub(text) {
@@ -4860,26 +5024,22 @@ function runCinema(name, faultCount, shipId) {
             timers.forEach(t => clearTimeout(t));
         }
     };
-    async function playScene(idx, state, line, opts, holdAfter, minMs) {
+    async function playScene(idx, state, line, opts, holdAfter) {
         if (stopped) return;
         goScene(idx);
         setMascotScene(state);
         showSub(line);
-        await Promise.all([
-            robotSpeak(line, opts),
-            wait(minMs || 4200)
-        ]);
+        await robotSpeak(line, opts);
         if (stopped) return;
-        await wait(holdAfter || 420);
+        await wait(holdAfter || 250);
         hideSub();
     }
     (async function runSyncedCinema() {
-        await wait(380);
-        await playScene(0, 'calm', '哈喽！我是你的专属领航员小猿！坐稳啦，我们的星际探险现在出发～', { audio: voiceAudio.opening, rate: 1.02, pitch: 1.15, volume: 0.85, fallbackMs: 7200 }, 520, 5600);
-        await wait(260);
-        await playScene(1, 'fault', '不好！能量系统故障了！推进器正在失去动力！', { audio: voiceAudio.error, rate: 1.12, pitch: 1.15, volume: 0.85, fallbackMs: 6200 }, 560, 4300);
-        await wait(260);
-        await playScene(2, 'guide', '别慌！有我在！快点击「开始修复」，我们一起把飞船修好！', { audio: voiceAudio.guide, rate: 0.97, pitch: 1.15, volume: 0.85, fallbackMs: 7600 }, 0, 6200);
+        await wait(250);
+        await playScene(0, 'calm', '坐稳啦！小猿已经检查好飞船，我们的太空任务马上启程！', { audio: voiceAudio.opening, rate: 1.02, pitch: 1.15, volume: 0.85, fallbackMs: 16000 }, 250);
+        await playScene(1, 'fault', '警报！前方出现陨石群，飞船正在进入紧急状态！', { audio: voiceAudio.error, rate: 1.12, pitch: 1.15, volume: 0.85, fallbackMs: 15300 }, 250);
+        await playScene(2, 'fault', '不好！飞船受到撞击，知识能量系统出现故障！', { audio: voiceAudio.impact, rate: 1.12, pitch: 1.15, volume: 0.85, fallbackMs: 15800 }, 250);
+        await playScene(3, 'guide', '别慌！有我在！点击「开始修复」，我们一起把飞船修好！', { audio: voiceAudio.guide, rate: 0.97, pitch: 1.15, volume: 0.85, fallbackMs: 18200 }, 0);
     })();
 }
 
@@ -4894,7 +5054,6 @@ function skipCinema() {
     }
     _ttsToken++;
     stopVoiceAudio();
-    try { window.speechSynthesis.cancel(); } catch(e) {}
     setMascotSpeaking(false);
     setTtsActive(false);
     enterRepairMode();
@@ -4916,7 +5075,7 @@ function enterRepairMode() {
                     <div class="sh-copy">
                         <div class="sh-brand"><span>猿辅导</span><span>小猿修复队</span></div>
                         <h1>&#x1F680; 飞船故障修复任务</h1>
-                        <div class="sh-sub">${escapeHTML(name)}同学，小猿发现了${_spaceWrongItems.length}个知识故障点，一起修好它！</div>
+                        <div class="sh-sub">${name}同学，小猿发现了${_spaceWrongItems.length}个知识故障点，一起修好它！</div>
                     </div>
                 </div>
             </div>
@@ -4979,6 +5138,7 @@ function renderFaultCard(r) {
 let _currentRepairId = null;
 let _energyBallTimer = null;
 let _repairReady = false;
+let _repairUnlockTimer = null;
 
 function startRepair(id) {
     sfxClick();
@@ -4997,6 +5157,10 @@ function startRepair(id) {
     doneBtn.disabled = true;
     doneBtn.innerHTML = '&#x23F3; 看完讲解后解锁';
     if (tip) tip.textContent = '认真看完讲解，按钮亮起后就能完成修复。';
+    if (_repairUnlockTimer) {
+        clearTimeout(_repairUnlockTimer);
+        _repairUnlockTimer = null;
+    }
 
     if (isMP4) {
         video.src = item.video;
@@ -5006,6 +5170,9 @@ function startRepair(id) {
         doneBtn.style.display = 'block';
         overlay.classList.add('show');
         video.play().catch(() => {});
+        _repairUnlockTimer = setTimeout(() => {
+            if (_currentRepairId === id && !_repairReady) onVideoReady();
+        }, 15000);
     } else {
         iframe.src = item.video;
         iframe.style.display = 'block';
@@ -5082,6 +5249,10 @@ function closeVideo() {
     const overlay = document.getElementById('videoOverlay');
     const video = document.getElementById('repairVideo');
     const iframe = document.getElementById('repairIframe');
+    if (_repairUnlockTimer) {
+        clearTimeout(_repairUnlockTimer);
+        _repairUnlockTimer = null;
+    }
     video.pause();
     video.src = '';
     video.style.display = 'none';
@@ -5142,14 +5313,15 @@ function updateBuddyMsg(msg) {
 
 function showCompletion(name, energy) {
     sfxCelebrate();
+    playVoiceMp3(voiceAudio.success, 5200);
     const totalFaults = _spaceWrongItems.length;
     const repairedCount = totalFaults === 0 ? QUESTIONS.length : (_repairedIds.size || totalFaults);
     const repairedLabel = totalFaults === 0 ? '全部通关题目' : '修复故障点';
     const displayEnergy = totalFaults === 0 ? QUESTIONS.length * 3 : energy;
     const focus = loadPlanFocus(name);
     const finishText = totalFaults === 0
-        ? `${escapeHTML(name)}同学，本次摸底测全部通关！`
-        : `${escapeHTML(name)}同学，所有飞船系统已修复！`;
+        ? `${name}同学，本次摸底测全部通关！`
+        : `${name}同学，所有飞船系统已修复！`;
     const focusText = focus && focus.focusItems && focus.focusItems.length > 0
         ? '已重点攻克：' + focus.focusItems.slice(0, 2).map(i => i.point).join('、')
         : '下一步可以挑战更高阶的综合训练';
@@ -5259,8 +5431,6 @@ function renderParentReport(params) {
     const score = Math.round((correctCount / QUESTIONS.length) * 100);
     const wrongItems = results.filter(r => !r.isCorrect);
     const correctItems = results.filter(r => r.isCorrect);
-    const insight = getLearningInsight(results, name);
-    savePlanFocus(name, insight);
 
     // 读取孩子端视频观看状态
     let watchedIds = [];
@@ -5286,26 +5456,17 @@ function renderParentReport(params) {
         return s.total > 0 ? Math.round((s.correct / s.total) * 100) : 80;
     });
 
-    const mainWeak = insight.mainWeak;
+    const weakDims = wrongItems.map(r => r.dimension);
+    const mainWeak = weakDims.length > 0 ? weakDims[0] : '';
 
     let diagText = '';
     if (score >= 80) {
-        diagText = `${escapeHTML(name)}同学表现优秀，整体基础扎实。` + (wrongCount > 0 ? `当前最值得补强的是「${mainWeak}」，建议用短时专项练习冲刺满分。` : '可以进入四年级综合应用和思维拓展训练。');
+        diagText = `${name}同学表现优秀！整体基础扎实。` + (mainWeak ? `AI发现在「${mainWeak}」维度存在提升空间，建议针对性强化以冲刺满分。` : '');
     } else if (score >= 50) {
-        diagText = `${escapeHTML(name)}同学有一定基础，但错题集中暴露出「${mainWeak}」薄弱点。建议先补核心方法，再做同类题巩固。`;
+        diagText = `${name}同学表现不错！` + (mainWeak ? `AI发现在「${mainWeak}」方面存在薄弱点，这是四年级数学的核心难点，建议重点加强。` : '');
     } else {
-        diagText = `${escapeHTML(name)}同学基础需要系统巩固，优先从「${mainWeak}」开始补。先把高频错题方法讲透，再逐步恢复做题信心。`;
+        diagText = `${name}同学基础需要巩固。` + (mainWeak ? `AI检测到「${mainWeak}」等多个维度存在明显薄弱环节，建议系统性补强以避免影响后续学习。` : '');
     }
-    const priorityHTML = insight.focusItems.length > 0
-        ? `<div class="ai-priority">
-            ${insight.focusItems.map((item, idx) => `
-                <div class="ai-priority-item">
-                    <strong>优先级 ${idx + 1} · ${item.dim}</strong>
-                    先补「${item.point}」（第${item.id}题：${item.tag}）
-                </div>
-            `).join('')}
-        </div>`
-        : `<div class="ai-priority"><div class="ai-priority-item"><strong>下一步建议</strong>进入四年级综合应用题和计算速度训练，保持优势。</div></div>`;
 
     const pieColors = ['#3b82f6','#f97316','#10B981','#a855f7','#f43f5e','#fbbf24'];
     const dimCounts = {};
@@ -5330,15 +5491,14 @@ function renderParentReport(params) {
 
     const app = document.getElementById('app');
     app.innerHTML = `
-        ${backBtnHTML()}${shareBtnHTML()}
         <div class="ai-report-page page">
             <div class="scan-line"></div>
             <button class="switch-view-btn" onclick="switchToChild()" style="color:rgba(255,255,255,0.7);">&#x1F680; 孩子视角</button>
             <div class="ai-header">
-                <div class="ah-logo">猿辅导 · 小猿AI诊断</div>
+                <div class="ah-logo"><img src="https://yfdpc.fbcontent.cn/s/logo-563d697805.svg" alt="猿辅导"></div>
                 <h1>&#x1F916; AI智能学情扫描报告</h1>
                 <div class="ah-meta">新4年级 · ${new Date().toLocaleDateString('zh-CN')} · AI诊断</div>
-                <div class="ah-child">&#x1F393; ${escapeHTML(name)}同学</div>
+                <div class="ah-child">&#x1F393; ${name}同学</div>
             </div>
 
             <div class="ai-data-cards anim d1">
@@ -5374,8 +5534,7 @@ function renderParentReport(params) {
             <div class="ai-diagnosis anim d2">
                 <div class="ad-tag">&#x1F916; AI诊断</div>
                 <div class="ad-text">${diagText}</div>
-                ${priorityHTML}
-                <div class="ad-credibility">本次诊断基于8道题的答题结果，从计算、逻辑、数形结合、应用题、规律探索5个维度分析。</div>
+                <div class="ad-credibility">本次诊断基于10亿+学生学习数据，准确率达98%</div>
             </div>
 
             <div class="chart-section anim d3">
@@ -5522,7 +5681,7 @@ function renderParentCard(r, isWrong, watchedIds) {
                     <div class="pqc-video-label">&#x1F3AC; 名师视频讲解 ${watched ? '<span style="color:#4ade80;font-size:11px;">&#x2705; 孩子已看完</span>' : '<span style="color:#f97316;font-size:11px;">&#x23F3; 孩子未观看</span>'}</div>
                     <div class="pqc-video">
                         ${r.video.endsWith('.mp4') ?
-                        '<video controls playsinline preload="none" poster="' + (r.poster || DEFAULT_POSTER) + '"><source src="' + r.video + '" type="video/mp4"></video>'
+                        '<video controls playsinline preload="none" poster="' + (r.poster||'') + '"><source src="' + r.video + '" type="video/mp4"></video>'
                         : '<a href="' + r.video + '" target="_blank" style="display:flex;align-items:center;justify-content:center;height:180px;background:linear-gradient(135deg,#0f172a,#1e3a5f);border-radius:12px;text-decoration:none;color:#fff;font-size:15px;font-weight:600;letter-spacing:1px;gap:8px;">&#x1F3AC; 点击观看视频讲解</a>'}
                     </div>
                 </div>
@@ -5553,39 +5712,9 @@ function goToStudyPlanParent() {
     window.scrollTo(0, 0);
 }
 
-// ==================== 暴露 inline handler 需要的函数到全局 ====================
-window.selectEntry = selectEntry;
-window.fillAllCorrect = fillAllCorrect;
-window.clearAll = clearAll;
-window.generateLink = generateLink;
-window.copyLink = copyLink;
-window.previewLink = previewLink;
-window.deleteHistory = deleteHistory;
-window.copyHistoryLink = copyHistoryLink;
-window.toggleCard = toggleCard;
-window.toggleParentCard = toggleParentCard;
-window.checkVideoProgress = checkVideoProgress;
-window.markWatched = markWatched;
-window.goToStudyPlan = goToStudyPlan;
-window.goToStudyPlanFromSpace = goToStudyPlanFromSpace;
-window.goToStudyPlanParent = goToStudyPlanParent;
-window.handleStartClick = handleStartClick;
-window.startRepair = startRepair;
-window.confirmRepair = confirmRepair;
-window.onVideoProgress = onVideoProgress;
-window.onVideoReady = onVideoReady;
-window.closeVideo = closeVideo;
-window.skipCinema = skipCinema;
-window.switchToChild = switchToChild;
-window.switchToParent = switchToParent;
-window.showToast = showToast;
-window.goBack = goBack;
-window.shareCurrentPage = shareCurrentPage;
-
 // ==================== 启动 ====================
 window.addEventListener('hashchange', function() { start(); });
 start();
-})();
 </script>
 
 </body>
