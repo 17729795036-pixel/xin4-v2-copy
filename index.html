@@ -265,6 +265,120 @@
         }
         .hi-del:active { background: rgba(239,68,68,0.5); transform: scale(0.9); }
 
+        /* 默认入口页：裸链接不给家长暴露老师后台 */
+        .landing-page {
+            min-height: 100vh;
+            background-image:
+                linear-gradient(180deg, rgba(4,8,32,0.24) 0%, rgba(8,13,48,0.84) 56%, rgba(15,23,42,0.98) 100%),
+                url('assets/mobile/kid-launch.jpg');
+            background-position: center top, center top;
+            background-size: auto, cover;
+            background-repeat: no-repeat, no-repeat;
+            color: #fff;
+            padding: 34px 20px 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .landing-badge {
+            display: inline-flex;
+            align-items: center;
+            align-self: flex-start;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.16);
+            color: rgba(255,255,255,0.84);
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .landing-main { padding-top: 70px; }
+        .landing-main h1 {
+            font-size: 30px;
+            line-height: 1.22;
+            font-weight: 900;
+            margin-bottom: 12px;
+            text-shadow: 0 12px 36px rgba(0,0,0,0.3);
+        }
+        .landing-sub {
+            font-size: 15px;
+            line-height: 1.75;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 20px;
+        }
+        .landing-path {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin: 22px 0;
+        }
+        .landing-step {
+            padding: 12px 8px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.14);
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.45;
+            color: rgba(255,255,255,0.82);
+        }
+        .landing-step strong {
+            display: block;
+            color: #fff;
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+        .landing-card {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.16);
+            backdrop-filter: blur(10px);
+        }
+        .landing-card-title {
+            font-size: 14px;
+            font-weight: 800;
+            margin-bottom: 6px;
+        }
+        .landing-card-text {
+            font-size: 13px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.74);
+        }
+        .landing-actions {
+            display: grid;
+            gap: 10px;
+            margin-top: 26px;
+        }
+        .landing-primary,
+        .landing-secondary {
+            width: 100%;
+            border: none;
+            border-radius: 15px;
+            padding: 15px 16px;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+        .landing-primary {
+            background: linear-gradient(135deg,#ff7a3d,#3b82f6);
+            color: #fff;
+            box-shadow: 0 12px 30px rgba(59,130,246,0.28);
+        }
+        .landing-secondary {
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.76);
+            border: 1px solid rgba(255,255,255,0.14);
+        }
+        .landing-note {
+            margin-top: 14px;
+            font-size: 11px;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.48);
+            text-align: center;
+        }
+
         /* =============================================
            家长端 - 报告页
            ============================================= */
@@ -1259,6 +1373,13 @@
             line-height: 1.8;
             margin-bottom: 12px;
         }
+        .fc-body.compact {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            color: rgba(255,255,255,0.68);
+        }
         .fc-goal {
             margin: 0 0 12px;
             padding: 10px 12px;
@@ -1268,6 +1389,10 @@
             color: rgba(219,234,254,0.95);
             font-size: 12px;
             line-height: 1.6;
+        }
+        .fc-goal.compact {
+            background: rgba(59,130,246,0.18);
+            color: rgba(239,246,255,0.96);
         }
         .fc-answer-mini {
             display: grid;
@@ -1286,6 +1411,7 @@
         }
         .fc-answer-mini strong { display: block; color: rgba(255,255,255,0.42); font-size: 10px; font-weight: 600; margin-bottom: 2px; }
         .fc-answer-mini .right { color: #86efac; }
+        .fc-answer-mini.child-lite { display: none; }
         .fc-tag {
             display: inline-block;
             padding: 3px 10px;
@@ -1294,6 +1420,22 @@
             background: rgba(102,126,234,0.2);
             color: #a5b4fc;
             margin-bottom: 14px;
+        }
+        .fc-fix-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .fc-fix-label {
+            color: rgba(255,255,255,0.46);
+            font-size: 11px;
+        }
+        .fc-fix-answer {
+            color: #86efac;
+            font-size: 13px;
+            font-weight: 800;
         }
         .repair-btn {
             width: 100%;
@@ -2848,6 +2990,56 @@
             color: #b0b0b0;
         }
 
+        .parent-summary-card {
+            margin: 0 16px 16px;
+            padding: 16px;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 4px 18px rgba(15,23,42,0.06);
+            border: 1px solid #e2e8f0;
+        }
+        .parent-summary-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .parent-summary-title {
+            font-size: 14px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+        .parent-summary-pill {
+            flex-shrink: 0;
+            padding: 3px 9px;
+            border-radius: 999px;
+            background: #eff6ff;
+            color: #2563eb;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .parent-summary-text {
+            font-size: 14px;
+            line-height: 1.75;
+            color: #334155;
+            margin-bottom: 12px;
+        }
+        .parent-next-actions {
+            display: grid;
+            gap: 8px;
+        }
+        .parent-next-action {
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: #f8fafc;
+            border: 1px solid #eef2f7;
+            color: #475569;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+        .parent-next-action strong { color: #0f172a; }
+
         /* CSS雷达图 */
         .chart-section {
             margin: 0 16px 16px;
@@ -3150,6 +3342,19 @@
         }
         .pqc-video { border-radius: 8px; overflow: hidden; }
         .pqc-video video { width: 100%; display: block; border-radius: 8px; }
+
+        @media (min-width: 760px) {
+            body { background: linear-gradient(90deg, #eef2ff 0%, #f8fafc 50%, #ecfeff 100%); }
+            .page { box-shadow: 0 24px 70px rgba(15,23,42,0.12); }
+            .admin-page,
+            .landing-page,
+            .space-page,
+            .ai-report-page,
+            .plan-page {
+                border-radius: 0 0 24px 24px;
+                overflow: hidden;
+            }
+        }
 
     </style>
 </head>
@@ -3651,6 +3856,12 @@ function start() {
         window.location.hash = window.__FORCE_HASH__;
     }
 
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('admin') === '1' || window.location.hash === '#admin') {
+        renderAdmin();
+        return;
+    }
+
     const planName = getPlanParams();
     if (planName) { renderStudyPlan(planName); return; }
 
@@ -3663,9 +3874,60 @@ function start() {
     const params = getParams();
     if (params && params.name && params.answers) {
         renderSpaceReport(params);
+    } else if (window.location.hash && window.location.hash.length > 1) {
+        renderInvalidLink();
     } else {
-        renderAdmin();
+        renderLanding();
     }
+}
+
+function renderLanding() {
+    const app = document.getElementById('app');
+    app.innerHTML = `
+        <div class="landing-page page">
+            <div>
+                <div class="landing-badge">猿辅导 · 小猿AI诊断</div>
+                <div class="landing-main">
+                    <h1>新4年级<br>摸底测成长报告</h1>
+                    <div class="landing-sub">
+                        这是一份专属报告入口。请打开老师发来的带姓名和结果的链接，查看孩子的错题修复任务与学习建议。
+                    </div>
+                    <div class="landing-path">
+                        <div class="landing-step"><strong>看结果</strong>定位薄弱点</div>
+                        <div class="landing-step"><strong>修错题</strong>完成讲解视频</div>
+                        <div class="landing-step"><strong>拿建议</strong>解锁学习规划</div>
+                    </div>
+                    <div class="landing-card">
+                        <div class="landing-card-title">给家长看的重点</div>
+                        <div class="landing-card-text">报告会展示孩子答题情况、错题知识点、视频学习进度和下一步建议，方便家长快速判断后续怎么补。</div>
+                    </div>
+                    <div class="landing-actions">
+                        <button class="landing-primary" onclick="showToast('请打开老师发来的专属报告链接')">查看专属报告</button>
+                        <button class="landing-secondary" onclick="openAdminEntry()">老师录入入口</button>
+                    </div>
+                </div>
+            </div>
+            <div class="landing-note">如果你是老师，需要生成报告链接，请点击“老师录入入口”。</div>
+        </div>
+    `;
+}
+
+function openAdminEntry() {
+    const base = window.location.href.split('#')[0];
+    const url = base.indexOf('?') >= 0 ? base + '&admin=1' : base + '?admin=1';
+    window.location.href = url;
+}
+
+function renderInvalidLink() {
+    const app = document.getElementById('app');
+    app.innerHTML = `
+        <div style="min-height:100vh;background:linear-gradient(180deg,#0f0c29,#302b63,#24243e);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;text-align:center;color:#fff;">
+            <div style="font-size:56px;margin-bottom:18px;">&#x26A0;&#xFE0F;</div>
+            <h2 style="font-size:20px;font-weight:800;margin-bottom:10px;">链接无效或已过期</h2>
+            <p style="color:rgba(255,255,255,0.68);font-size:14px;line-height:1.8;margin-bottom:24px;">请联系老师重新生成专属报告链接。</p>
+            <button onclick="window.location.hash='';location.reload();" style="padding:13px 32px;border-radius:12px;background:linear-gradient(135deg,#667eea,#3b82f6);color:#fff;font-size:15px;font-weight:700;border:none;">返回首页</button>
+        </div>
+    `;
 }
 
 // ==================== 老师端：录入页 ====================
@@ -5123,9 +5385,13 @@ function renderFaultCard(r) {
                 </div>
                 <div class="fc-light" id="light-${r.id}"></div>
             </div>
-            <div class="fc-body">${r.fullText}</div>
-            <div class="fc-goal">&#x1F3AF; 这次要修复：${point}<br>&#x1F4A1; 看完后要能说出：为什么正确答案是 ${LETTERS[r.answer]}. ${r.options[r.answer]}</div>
-            <div class="fc-answer-mini">
+            <div class="fc-body compact">${r.fullText}</div>
+            <div class="fc-goal compact">&#x1F3AF; 本关目标：学会「${point}」</div>
+            <div class="fc-fix-line">
+                <span class="fc-fix-label">修复成功后，要能讲清正确答案</span>
+                <span class="fc-fix-answer">${LETTERS[r.answer]}. ${r.options[r.answer]}</span>
+            </div>
+            <div class="fc-answer-mini child-lite">
                 <div><strong>你的答案</strong>${r.selectedLetter}. ${r.options[r.selected]}</div>
                 <div class="right"><strong>正确答案</strong>${LETTERS[r.answer]}. ${r.options[r.answer]}</div>
             </div>
@@ -5432,6 +5698,8 @@ function renderParentReport(params) {
     const score = Math.round((correctCount / QUESTIONS.length) * 100);
     const wrongItems = results.filter(r => !r.isCorrect);
     const correctItems = results.filter(r => r.isCorrect);
+    const insight = getLearningInsight(results, name);
+    savePlanFocus(name, insight);
 
     // 读取孩子端视频观看状态
     let watchedIds = [];
@@ -5457,8 +5725,7 @@ function renderParentReport(params) {
         return s.total > 0 ? Math.round((s.correct / s.total) * 100) : 80;
     });
 
-    const weakDims = wrongItems.map(r => r.dimension);
-    const mainWeak = weakDims.length > 0 ? weakDims[0] : '';
+    const mainWeak = insight.mainWeak || '';
 
     let diagText = '';
     if (score >= 80) {
@@ -5468,6 +5735,20 @@ function renderParentReport(params) {
     } else {
         diagText = `${name}同学基础需要巩固。` + (mainWeak ? `AI检测到「${mainWeak}」等多个维度存在明显薄弱环节，建议系统性补强以避免影响后续学习。` : '');
     }
+
+    const summaryWeak = wrongCount > 0 ? `主要薄弱点集中在「${mainWeak}」` : '本次基础掌握较好';
+    const summaryAction = wrongCount > 0
+        ? `建议先完成${Math.min(wrongCount, 3)}个关键错题视频，再做同类题巩固。`
+        : '建议进入四年级综合应用和思维拓展训练。';
+    const firstFocus = insight.focusItems[0];
+    const nextActionHTML = wrongCount > 0
+        ? `<div class="parent-next-actions">
+            <div class="parent-next-action"><strong>第一步：</strong>先让孩子完成错题视频，重点看懂${firstFocus ? `第${firstFocus.id}题「${firstFocus.point}」` : '第一道错题'}。</div>
+            <div class="parent-next-action"><strong>第二步：</strong>看完后让孩子口头复述解题方法，能讲出来才算真正修复。</div>
+        </div>`
+        : `<div class="parent-next-actions">
+            <div class="parent-next-action"><strong>下一步：</strong>保持当前优势，可以挑战更高阶的综合题和思维拓展。</div>
+        </div>`;
 
     const pieColors = ['#3b82f6','#f97316','#10B981','#a855f7','#f43f5e','#fbbf24'];
     const dimCounts = {};
@@ -5517,6 +5798,15 @@ function renderParentReport(params) {
                 </div>
             </div>
 
+            <div class="parent-summary-card anim d1">
+                <div class="parent-summary-top">
+                    <div class="parent-summary-title">本次核心结论</div>
+                    <div class="parent-summary-pill">${score}分 · ${wrongCount}个待补点</div>
+                </div>
+                <div class="parent-summary-text">${name}同学${summaryWeak}。${summaryAction}</div>
+                ${nextActionHTML}
+            </div>
+
             ${wrongCount > 0 ? `
             <div class="ai-watch-status anim d1" style="margin:16px 16px 0;padding:14px 16px;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
                 <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
@@ -5535,7 +5825,7 @@ function renderParentReport(params) {
             <div class="ai-diagnosis anim d2">
                 <div class="ad-tag">&#x1F916; AI诊断</div>
                 <div class="ad-text">${diagText}</div>
-                <div class="ad-credibility">本次诊断基于10亿+学生学习数据，准确率达98%</div>
+                <div class="ad-credibility">本次诊断基于8道题答题结果，从计算、逻辑、数形结合、应用题、规律探索5个维度分析。</div>
             </div>
 
             <div class="chart-section anim d3">
@@ -5568,9 +5858,9 @@ function renderParentReport(params) {
             ` : ''}
 
             <div class="ai-action-bar">
-                <button class="ai-action-btn primary" onclick="goToStudyPlanParent()">&#x1F4C8; 查看AI专属学习规划</button>
+                <button class="ai-action-btn primary" onclick="goToStudyPlanParent()">&#x1F4C8; 查看下一步学习建议</button>
                 <button class="ai-action-btn ghost" onclick="switchToChild()">&#x1F680; 切换到孩子视角</button>
-                <div class="ai-action-note">AI将根据学习进度实时调整学习计划</div>
+                <div class="ai-action-note">建议先完成错题视频，再查看后续学习安排</div>
             </div>
 
             <div class="ai-footer">
