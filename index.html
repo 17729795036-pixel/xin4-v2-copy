@@ -2626,8 +2626,21 @@
             font-size: 18px;
             line-height: 1.55;
             color: rgba(255,255,255,0.84);
-            margin-bottom: 26px;
+            margin-bottom: 14px;
             max-width: 340px;
+        }
+        .repair-gate-task {
+            max-width: 340px;
+            margin-bottom: 22px;
+            padding: 10px 14px;
+            border-radius: 16px;
+            background: rgba(15,23,42,0.52);
+            border: 1px solid rgba(255,255,255,0.16);
+            color: rgba(255,255,255,0.9);
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.55;
+            backdrop-filter: blur(10px);
         }
         .repair-gate-stats {
             display: grid;
@@ -2903,6 +2916,22 @@
             font-size: 15px; color: rgba(255,255,255,0.76); letter-spacing: 0; margin-bottom: 0;
             line-height: 1.55;
         }
+        .start-task-status {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 100%;
+            margin-top: 10px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: rgba(15,23,42,0.46);
+            border: 1px solid rgba(255,255,255,0.16);
+            color: rgba(255,255,255,0.86);
+            font-size: 12px;
+            font-weight: 800;
+            line-height: 1.45;
+            backdrop-filter: blur(10px);
+        }
         .mission-chips {
             display: flex;
             justify-content: center;
@@ -3023,7 +3052,17 @@
             font-weight: 800;
         }
         .ai-header .ah-logo img { display: none; }
-        .ai-header h1 { font-size: 20px; font-weight: 800; color: #fff; position: relative; z-index: 1; }
+        .ai-header h1 {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+            line-height: 1.28;
+            max-width: 300px;
+            margin: 0 auto;
+            overflow-wrap: anywhere;
+        }
         .ai-header .ah-meta {
             margin-top: 10px;
             font-size: 12px;
@@ -3044,20 +3083,34 @@
         }
 
         .ai-data-cards {
-            display: flex;
-            gap: 10px;
-            margin: -24px 16px 16px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 8px;
+            width: calc(100% - 32px);
+            margin: -24px auto 16px;
             position: relative; z-index: 2;
+            overflow: hidden;
         }
         .ai-dc {
-            flex: 1;
+            min-width: 0;
+            max-width: 100%;
+            overflow: hidden;
             background: #fff;
             border-radius: 16px;
-            padding: 16px 12px;
+            padding: 15px 6px;
             text-align: center;
             box-shadow: 0 4px 20px rgba(0,0,0,0.06);
         }
-        .ai-dc .dc-num { font-size: 28px; font-weight: 800; }
+        .ai-dc .dc-num {
+            font-size: 26px;
+            font-weight: 800;
+            line-height: 1.05;
+            white-space: nowrap;
+        }
+        .ai-dc .dc-num small {
+            font-size: 11px !important;
+            margin-left: 1px;
+        }
         .ai-dc .dc-num.green { color: #10B981; }
         .ai-dc .dc-num.red { color: #EF4444; }
         .ai-dc .dc-num.blue {
@@ -3151,6 +3204,19 @@
             color: #334155;
             margin-bottom: 12px;
         }
+        .parent-teacher-note {
+            margin-bottom: 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #eff6ff, #f8fafc);
+            border: 1px solid #dbeafe;
+            color: #1e3a8a;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+        .parent-teacher-note strong {
+            color: #0f172a;
+        }
         .parent-next-actions {
             display: grid;
             gap: 8px;
@@ -3165,6 +3231,15 @@
             line-height: 1.6;
         }
         .parent-next-action strong { color: #0f172a; }
+        @media (max-width: 360px) {
+            .ai-header h1 { font-size: 18px; max-width: 280px; }
+            .ai-data-cards { gap: 6px; width: calc(100% - 24px); }
+            .ai-dc { padding: 13px 6px; border-radius: 14px; }
+            .ai-dc .dc-num { font-size: 24px; }
+            .ai-dc .dc-label { font-size: 10px; }
+            .parent-summary-top { align-items: flex-start; flex-direction: column; }
+            .parent-summary-pill { white-space: normal; }
+        }
 
         /* CSS雷达图 */
         .chart-section {
@@ -4921,6 +4996,12 @@ function stripHTML(html) {
     return div.textContent || div.innerText || '';
 }
 
+function escapeHTML(str) {
+    const div = document.createElement('div');
+    div.appendChild(document.createTextNode(str || ''));
+    return div.innerHTML;
+}
+
 function getLearningInsight(results, name) {
     const wrongItems = results.filter(r => !r.isCorrect);
     const dimCounts = {};
@@ -4988,6 +5069,7 @@ function showRepairGate(name) {
                 <div class="repair-gate-kicker">新4年级摸底测</div>
                 <h1>小猿任务</h1>
                 <div class="repair-gate-desc">${name}同学，小猿为你准备了专属闯关任务。完成关卡，就能修复飞船能量系统。</div>
+                <div class="repair-gate-task">本次有 ${wrongCount} 个故障点待修复，先看讲解，再完成闯关。</div>
                 <div class="repair-gate-stats">
                     <div class="repair-gate-stat"><strong>${QUESTIONS.length}</strong><span>总题数</span></div>
                     <div class="repair-gate-stat"><strong>${wrongCount}</strong><span>待闯关</span></div>
@@ -5047,6 +5129,7 @@ function showStartScreen(name, opts) {
                     <div class="start-sub1">小猿宇航员已就位</div>
                     <h1>小猿闯关大冒险</h1>
                     <div class="start-sub2">${name}同学，和小猿一起把飞船修好</div>
+                    <div class="start-task-status">本次有 ${_spaceWrongItems.length} 个故障点待修复，完成后解锁专属学习计划</div>
                     <div class="mission-chips"><span>看讲解</span><span>修故障</span><span>解锁计划</span></div>
                 </div>
                 <div class="start-btn-wrap" style="margin-top:36px;">
@@ -5911,26 +5994,44 @@ function renderParentReport(params) {
         return s.total > 0 ? Math.round((s.correct / s.total) * 100) : 80;
     });
 
-    const mainWeak = insight.mainWeak || '';
+    const mainWeak = insight.mainWeak || '综合能力';
+    const firstFocus = insight.focusItems[0];
+    const firstFocusPoint = firstFocus ? firstFocus.point : '综合应用能力';
+    const firstWrong = wrongItems[0];
 
     let diagText = '';
     if (score >= 80) {
-        diagText = `${name}同学表现优秀！整体基础扎实。` + (mainWeak ? `AI发现在「${mainWeak}」维度存在提升空间，建议针对性强化以冲刺满分。` : '');
+        diagText = wrongCount > 0
+            ? `${escapeHTML(name)}同学整体基础扎实，本次主要是「${mainWeak}」还有冲刺满分空间。建议先抓第${firstWrong.id}题，把「${firstFocusPoint}」讲清楚，再做2-3道同类题巩固。`
+            : `${escapeHTML(name)}同学本次基础表现很稳，可以进入四年级综合应用题和思维拓展训练，重点保持计算速度和审题稳定性。`;
     } else if (score >= 50) {
-        diagText = `${name}同学表现不错！` + (mainWeak ? `AI发现在「${mainWeak}」方面存在薄弱点，这是四年级数学的核心难点，建议重点加强。` : '');
+        diagText = `${escapeHTML(name)}同学具备一定基础，但错题集中暴露出「${mainWeak}」薄弱点。这类问题如果不及时修复，四年级遇到综合应用题时会更容易卡在审题、建模或列式环节。建议先补「${firstFocusPoint}」，再进行同类题巩固。`;
     } else {
-        diagText = `${name}同学基础需要巩固。` + (mainWeak ? `AI检测到「${mainWeak}」等多个维度存在明显薄弱环节，建议系统性补强以避免影响后续学习。` : '');
+        diagText = `${escapeHTML(name)}同学目前需要先稳住基础和信心，优先从「${mainWeak}」开始补。不要一次性刷很多题，先把第${firstWrong.id}题对应的「${firstFocusPoint}」讲透，让孩子能复述方法，再逐步增加练习量。`;
     }
+    const priorityHTML = insight.focusItems.length > 0
+        ? `<div class="ai-priority">
+            ${insight.focusItems.map((item, idx) => `
+                <div class="ai-priority-item">
+                    <strong>优先级 ${idx + 1} · ${item.dim}</strong>
+                    先补「${item.point}」（第${item.id}题：${item.tag}）
+                </div>
+            `).join('')}
+        </div>`
+        : `<div class="ai-priority"><div class="ai-priority-item"><strong>下一步建议</strong>进入四年级综合应用题和计算速度训练，保持优势。</div></div>`;
 
+    const teacherNote = wrongCount > 0
+        ? `从班主任视角看，这次不是简单的“对错统计”，而是要抓住孩子最先影响四年级衔接的薄弱点：<strong>${mainWeak}</strong>。先修复关键错题，再安排同类练习，效果会比直接刷题更稳定。`
+        : `从班主任视角看，孩子当前基础稳定，可以把重点放到四年级衔接题、综合应用题和表达能力训练上，继续扩大优势。`;
     const summaryWeak = wrongCount > 0 ? `主要薄弱点集中在「${mainWeak}」` : '本次基础掌握较好';
     const summaryAction = wrongCount > 0
-        ? `建议先完成${Math.min(wrongCount, 3)}个关键错题视频，再做同类题巩固。`
+        ? `建议先完成${Math.min(wrongCount, 3)}个关键错题视频，并让孩子复述方法，再做同类题巩固。`
         : '建议进入四年级综合应用和思维拓展训练。';
-    const firstFocus = insight.focusItems[0];
     const nextActionHTML = wrongCount > 0
         ? `<div class="parent-next-actions">
-            <div class="parent-next-action"><strong>第一步：</strong>先让孩子完成错题视频，重点看懂${firstFocus ? `第${firstFocus.id}题「${firstFocus.point}」` : '第一道错题'}。</div>
+            <div class="parent-next-action"><strong>第一步：</strong>先让孩子完成第${wrongItems[0].id}题视频，重点看懂「${stripHTML(wrongItems[0].knowledge.point)}」。</div>
             <div class="parent-next-action"><strong>第二步：</strong>看完后让孩子口头复述解题方法，能讲出来才算真正修复。</div>
+            <div class="parent-next-action"><strong>第三步：</strong>当天补2-3道同类题，班主任再根据完成情况调整后续学习建议。</div>
         </div>`
         : `<div class="parent-next-actions">
             <div class="parent-next-action"><strong>下一步：</strong>保持当前优势，可以挑战更高阶的综合题和思维拓展。</div>
@@ -5963,10 +6064,10 @@ function renderParentReport(params) {
             <div class="scan-line"></div>
             <button class="switch-view-btn" onclick="switchToChild()" style="color:rgba(255,255,255,0.7);">&#x1F680; 孩子视角</button>
             <div class="ai-header">
-                <div class="ah-logo"><img src="https://yfdpc.fbcontent.cn/s/logo-563d697805.svg" alt="猿辅导"></div>
-                <h1>&#x1F916; AI智能学情扫描报告</h1>
-                <div class="ah-meta">新4年级 · ${new Date().toLocaleDateString('zh-CN')} · AI诊断</div>
-                <div class="ah-child">&#x1F393; ${name}同学</div>
+                <div class="ah-logo">猿辅导 · 班主任学情诊断</div>
+                <h1>${escapeHTML(name)}同学新4年级学情诊断报告</h1>
+                <div class="ah-meta">新4年级 · ${new Date().toLocaleDateString('zh-CN')} · AI辅助分析</div>
+                <div class="ah-child">&#x1F393; ${escapeHTML(name)}同学</div>
             </div>
 
             <div class="ai-data-cards anim d1">
@@ -5989,7 +6090,8 @@ function renderParentReport(params) {
                     <div class="parent-summary-title">本次核心结论</div>
                     <div class="parent-summary-pill">${score}分 · ${wrongCount}个待补点</div>
                 </div>
-                <div class="parent-summary-text">${name}同学${summaryWeak}。${summaryAction}</div>
+                <div class="parent-summary-text">${escapeHTML(name)}同学${summaryWeak}。${summaryAction}</div>
+                <div class="parent-teacher-note">${teacherNote}</div>
                 ${nextActionHTML}
             </div>
 
@@ -6009,19 +6111,20 @@ function renderParentReport(params) {
             ` : ''}
 
             <div class="ai-diagnosis anim d2">
-                <div class="ad-tag">&#x1F916; AI诊断</div>
+                <div class="ad-tag">班主任解读</div>
                 <div class="ad-text">${diagText}</div>
-                <div class="ad-credibility">本次诊断基于8道题答题结果，从计算、逻辑、数形结合、应用题、规律探索5个维度分析。</div>
+                ${priorityHTML}
+                <div class="ad-credibility">本次诊断基于8道题的答题结果，从计算、逻辑、数形结合、应用题、规律探索5个维度分析，由AI辅助班主任生成学习建议。</div>
             </div>
 
             <div class="chart-section anim d3">
                 <div class="chart-section-title">&#x1F4CA; 数据可视化分析</div>
                 <div class="chart-card">
-                    <div class="chart-card-title"><span class="ad-tag" style="font-size:9px;">AI</span> 能力雷达图</div>
+                    <div class="chart-card-title"><span class="ad-tag" style="font-size:9px;">诊断</span> 能力雷达图</div>
                     <div class="radar-wrap">${radarSVG}</div>
                 </div>
                 <div class="chart-card">
-                    <div class="chart-card-title"><span class="ad-tag" style="font-size:9px;">AI</span> 错题知识点分布</div>
+                    <div class="chart-card-title"><span class="ad-tag" style="font-size:9px;">诊断</span> 错题知识点分布</div>
                     <div class="pie-wrap" style="background:conic-gradient(${pieGradient});">
                         <div class="pie-center">${wrongCount}道<br>错题</div>
                     </div>
