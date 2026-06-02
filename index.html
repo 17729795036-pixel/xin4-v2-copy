@@ -1972,6 +1972,43 @@
         .start-bg.auto-intro .start-asteroid {
             display: none;
         }
+        @media (max-width: 640px) {
+            .cinema.mobile-perf .cinema-bg-img,
+            .cinema.mobile-perf .start-bg-img {
+                transform: none;
+            }
+            .cinema.mobile-perf .cinema-stars.flow {
+                animation-duration: 3.8s;
+            }
+            .cinema.mobile-perf .s2-flash {
+                animation-duration: 2.4s;
+                opacity: 0.58;
+            }
+            .cinema.mobile-perf .s2-bg {
+                animation-duration: 0.8s;
+            }
+            .cinema.mobile-perf .s3-bg {
+                animation-duration: 0.75s;
+            }
+            .cinema.mobile-perf .s2-smoke {
+                filter: blur(14px);
+                width: 80px;
+                height: 80px;
+            }
+            .cinema.mobile-perf .cinema-ship-motion {
+                opacity: 0.28;
+                filter: none;
+            }
+            .cinema.mobile-perf .s1-nebula {
+                display: none;
+            }
+            .cinema.mobile-perf .s2-particle,
+            .cinema.mobile-perf .s2-ember,
+            .cinema.mobile-perf .s2-lightning,
+            .cinema.mobile-perf .s1-trail {
+                will-change: transform, opacity;
+            }
+        }
         :root {
             --asset-base: 'assets/';
         }
@@ -5075,16 +5112,25 @@ function showRepairGate(name) {
                     <div class="repair-gate-stat"><strong>${wrongCount}</strong><span>待闯关</span></div>
                     <div class="repair-gate-stat"><strong>${Math.max(0, QUESTIONS.length - wrongCount)}</strong><span>已掌握</span></div>
                 </div>
-                <button class="repair-gate-btn" onpointerdown="playReadyVoiceNow()" ontouchstart="playReadyVoiceNow()" onclick="enterStartScreen()">开启小猿任务</button>
+                <button class="repair-gate-btn" onclick="enterStartScreen(event)">开启小猿任务</button>
             </div>
         </div>
     `;
 }
 
-function enterStartScreen() {
+let _gateEntering = false;
+function enterStartScreen(event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    if (_gateEntering) return;
+    _gateEntering = true;
     markRepairGatePassed();
+    unlockAudioByGesture();
     const readyVoice = playReadyVoiceNow();
     showStartScreen(_spaceName, { autoIntro: true });
+    _gateEntering = false;
     startSpaceIntro(false, 0, readyVoice);
 }
 
@@ -5145,6 +5191,11 @@ function showStartScreen(name, opts) {
 
 let _startLaunching = false;
 function handleStartClick(e) {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    unlockAudioByGesture();
     startSpaceIntro(true);
 }
 
@@ -5154,9 +5205,7 @@ function startSpaceIntro(playReadyVoice, delayMs, waitFor) {
     const wrap = document.getElementById('startShipWrap');
     if (wrap) wrap.classList.add('start-ship-launching');
     try {
-        const ctx = getAudioCtx();
-        if (ctx.state === 'suspended') ctx.resume();
-        playTone(440, 0.01, 'sine', 0.01);
+        unlockAudioByGesture();
     } catch(e) {}
     const ready = waitFor || (playReadyVoice ? playReadyVoiceNow() : Promise.resolve());
     ready.then(function() {
@@ -5201,13 +5250,26 @@ function createVoiceAudio(src) {
 }
 
 const voiceAudio = {
-    ready: createVoiceAudio(VOICE_READY),
-    opening: createVoiceAudio(VOICE_OPENING),
-    error: createVoiceAudio(VOICE_ERROR),
-    impact: createVoiceAudio(VOICE_IMPACT),
-    guide: createVoiceAudio(VOICE_GUIDE),
-    success: createVoiceAudio(VOICE_SUCCESS)
+    ready: null,
+    opening: null,
+    error: null,
+    impact: null,
+    guide: null,
+    success: null
 };
+
+function getVoiceAudio(name, src) {
+    if (!voiceAudio[name]) voiceAudio[name] = createVoiceAudio(src);
+    return voiceAudio[name];
+}
+
+function unlockAudioByGesture() {
+    try {
+        const ctx = getAudioCtx();
+        if (ctx && ctx.state === 'suspended') ctx.resume();
+        playTone(440, 0.03, 'sine', 0.025);
+    } catch(e) {}
+}
 
 function playReadyVoiceNow() {
     if (_readyVoicePromise) return _readyVoicePromise;
@@ -5226,7 +5288,7 @@ function playReadyVoiceNow() {
         }
         try {
             stopVoiceAudio();
-            const audio = new Audio(VOICE_READY);
+            const audio = getVoiceAudio('ready', VOICE_READY) || new Audio(VOICE_READY);
             audio.preload = 'auto';
             audio.volume = 0.9;
             audio.onended = function() {
@@ -5391,9 +5453,11 @@ document.addEventListener('visibilitychange', function() {
 function showSpaceIntro(name) {
     const faultCount = _spaceWrongItems.length;
     const shipId = 'YFD-' + Math.floor(Math.random()*9000+1000);
+    const mobilePerf = isMobileFastMode();
 
     let trailsHTML = '';
-    for (let i = 0; i < 18; i++) {
+    const trailCount = mobilePerf ? 7 : 18;
+    for (let i = 0; i < trailCount; i++) {
         const top = 3 + Math.random() * 94;
         const w = 100 + Math.random() * 300;
         const delay = Math.random() * 3;
@@ -5403,7 +5467,8 @@ function showSpaceIntro(name) {
     }
 
     let dustHTML = '<div class="cinema-dust">';
-    for (let i = 0; i < 15; i++) {
+    const dustCount = mobilePerf ? 5 : 15;
+    for (let i = 0; i < dustCount; i++) {
         const left = Math.random() * 100;
         const delay = Math.random() * 8;
         const size = 1 + Math.random() * 2;
@@ -5412,7 +5477,8 @@ function showSpaceIntro(name) {
     dustHTML += '</div>';
 
     let lightningsHTML = '';
-    for (let i = 0; i < 14; i++) {
+    const lightningCount = mobilePerf ? 5 : 14;
+    for (let i = 0; i < lightningCount; i++) {
         const left = 3 + Math.random() * 94;
         const h = 80 + Math.random() * 300;
         const top = Math.random() * 70;
@@ -5423,7 +5489,8 @@ function showSpaceIntro(name) {
     }
 
     let particlesHTML = '';
-    for (let i = 0; i < 30; i++) {
+    const particleCount = mobilePerf ? 10 : 30;
+    for (let i = 0; i < particleCount; i++) {
         const top = Math.random() * 100;
         const left = 20 + Math.random() * 80;
         const delay = Math.random() * 2;
@@ -5435,7 +5502,8 @@ function showSpaceIntro(name) {
     }
 
     let smokeHTML = '';
-    for (let i = 0; i < 6; i++) {
+    const smokeCount = mobilePerf ? 2 : 6;
+    for (let i = 0; i < smokeCount; i++) {
         const top = 25 + Math.random() * 50;
         const left = 15 + Math.random() * 70;
         const delay = Math.random() * 3;
@@ -5443,7 +5511,8 @@ function showSpaceIntro(name) {
     }
 
     let embersHTML = '';
-    for (let i = 0; i < 20; i++) {
+    const emberCount = mobilePerf ? 6 : 20;
+    for (let i = 0; i < emberCount; i++) {
         const x = 30 + Math.random() * 40;
         const y = 40 + Math.random() * 30;
         const dx = -80 + Math.random() * 160;
@@ -5456,7 +5525,7 @@ function showSpaceIntro(name) {
 
     const app = document.getElementById('app');
     app.innerHTML = `
-        <div class="cinema" id="cinema">
+        <div class="cinema ${mobilePerf ? 'mobile-perf' : ''}" id="cinema">
             <button class="cinema-skip" onclick="skipCinema()">跳过 ></button>
             <div class="cinema-sub" id="cinemaSub"></div>
 
@@ -5558,10 +5627,10 @@ function runCinema(name, faultCount, shipId) {
     }
     (async function runSyncedCinema() {
         await wait(250);
-        await playScene(0, 'calm', '坐稳啦！小猿已经检查好飞船，我们的太空任务马上启程！', { audio: voiceAudio.opening, rate: 1.02, pitch: 1.15, volume: 0.85, fallbackMs: 16000 }, 250);
-        await playScene(1, 'fault', '警报！前方出现陨石群，飞船正在进入紧急状态！', { audio: voiceAudio.error, rate: 1.12, pitch: 1.15, volume: 0.85, fallbackMs: 15300 }, 250);
-        await playScene(2, 'fault', '不好！飞船受到撞击，知识能量系统出现故障！', { audio: voiceAudio.impact, rate: 1.12, pitch: 1.15, volume: 0.85, fallbackMs: 15800 }, 250);
-        await playScene(3, 'guide', '别慌！有我在！点击「开始修复」，我们一起把飞船修好！', { audio: voiceAudio.guide, rate: 0.97, pitch: 1.15, volume: 0.85, fallbackMs: 18200 }, 0);
+        await playScene(0, 'calm', '坐稳啦！小猿已经检查好飞船，我们的太空任务马上启程！', { audio: getVoiceAudio('opening', VOICE_OPENING), rate: 1.02, pitch: 1.15, volume: 0.85, fallbackMs: 16000 }, 250);
+        await playScene(1, 'fault', '警报！前方出现陨石群，飞船正在进入紧急状态！', { audio: getVoiceAudio('error', VOICE_ERROR), rate: 1.12, pitch: 1.15, volume: 0.85, fallbackMs: 15300 }, 250);
+        await playScene(2, 'fault', '不好！飞船受到撞击，知识能量系统出现故障！', { audio: getVoiceAudio('impact', VOICE_IMPACT), rate: 1.12, pitch: 1.15, volume: 0.85, fallbackMs: 15800 }, 250);
+        await playScene(3, 'guide', '别慌！有我在！点击「开始修复」，我们一起把飞船修好！', { audio: getVoiceAudio('guide', VOICE_GUIDE), rate: 0.97, pitch: 1.15, volume: 0.85, fallbackMs: 18200 }, 0);
     })();
 }
 
@@ -5842,7 +5911,7 @@ function updateBuddyMsg(msg) {
 
 function showCompletion(name, energy) {
     sfxCelebrate();
-    playVoiceMp3(voiceAudio.success, 5200);
+    playVoiceMp3(getVoiceAudio('success', VOICE_SUCCESS), 5200);
     const totalFaults = _spaceWrongItems.length;
     const repairedCount = totalFaults === 0 ? QUESTIONS.length : (_repairedIds.size || totalFaults);
     const repairedLabel = totalFaults === 0 ? '全部通关题目' : '完成关卡';
