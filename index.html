@@ -4999,9 +4999,7 @@ function renderSpaceReport(params) {
         return;
     }
 
-    if (repairGatePassed() && isMobileFastMode()) {
-        enterRepairMode();
-    } else if (repairGatePassed()) {
+    if (repairGatePassed()) {
         showStartScreen(name);
     } else {
         showRepairGate(name);
@@ -5111,15 +5109,79 @@ function enterStartScreen(event) {
     unlockAudioByGesture();
     playReadyVoiceNow();
     if (isMobileFastMode()) {
-        setTimeout(function() {
-            _gateEntering = false;
-            enterRepairMode();
-        }, 450);
+        showMobileStoryIntro(_spaceName);
+        _gateEntering = false;
         return;
     }
     showStartScreen(_spaceName, { autoIntro: true });
     _gateEntering = false;
     startSpaceIntro(false, 0, Promise.resolve());
+}
+
+function showMobileStoryIntro(name) {
+    const app = document.getElementById('app');
+    const faultCount = _spaceWrongItems.length;
+    app.innerHTML = `
+        <div class="cinema mobile-light mobile-story" id="cinema">
+            <button class="cinema-skip" onclick="skipCinema()">跳过 ></button>
+            <div class="cinema-sub show" id="cinemaSub">小猿已经检查好飞船，准备开始修复任务！</div>
+
+            <div class="cinema-scene s1-bg active" id="scene1">
+                <img class="cinema-bg-img" src="assets/mobile/kid-calm-space.jpg" alt="" fetchpriority="high" decoding="async" onerror="this.onerror=null;this.src='assets/kid-calm-space.png';">
+                <div class="cinema-stars flow"></div>
+                <div class="cinema-vignette"></div>
+            </div>
+            <div class="cinema-scene s2-bg" id="scene2">
+                <img class="cinema-bg-img" src="assets/mobile/kid-asteroid-alert.jpg" alt="" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/kid-asteroid-alert.png';">
+                <div class="cinema-stars"></div>
+                <div class="cinema-vignette" style="background:radial-gradient(ellipse at center, transparent 30%, rgba(5,0,20,0.7) 100%);"></div>
+            </div>
+            <div class="cinema-scene s4-bg" id="scene4">
+                <img class="cinema-bg-img" src="assets/mobile/kid-holo-guide.jpg" alt="" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/kid-holo-guide.png';">
+                <div class="cinema-stars"></div>
+                <div class="cinema-vignette"></div>
+                <div class="s3-hud">
+                    <div class="s3-guide-note">${escapeHTML(name)}同学，已解锁 ${faultCount} 个修复关卡</div>
+                    <button class="cinema-enter" onclick="skipCinema()" style="margin-top:0;width:100%;">开始修复</button>
+                </div>
+            </div>
+        </div>
+    `;
+    runMobileStoryIntro();
+}
+
+function runMobileStoryIntro() {
+    const sub = document.getElementById('cinemaSub');
+    const scenes = [
+        document.getElementById('scene1'),
+        document.getElementById('scene2'),
+        document.getElementById('scene4')
+    ];
+    const lines = [
+        '小猿已经检查好飞船，准备开始修复任务！',
+        '警报！发现知识能量故障，需要你来帮忙！',
+        '看完讲解，完成闯关，就能修复飞船能量！'
+    ];
+    const timers = [];
+    let stopped = false;
+    function go(idx) {
+        if (stopped) return;
+        scenes.forEach((s, i) => { if (s) s.classList.toggle('active', i === idx); });
+        if (sub) {
+            sub.textContent = lines[idx];
+            sub.classList.add('show');
+        }
+        try { playTone(520 + idx * 120, 0.05, 'sine', 0.025); } catch(e) {}
+    }
+    _cinemaTimer = {
+        stop: function() {
+            stopped = true;
+            timers.forEach(t => clearTimeout(t));
+        }
+    };
+    go(0);
+    timers.push(setTimeout(function() { go(1); }, 1200));
+    timers.push(setTimeout(function() { go(2); }, 2600));
 }
 
 function showStartScreen(name, opts) {
@@ -5441,7 +5503,7 @@ document.addEventListener('visibilitychange', function() {
 
 function showSpaceIntro(name) {
     if (isMobileFastMode()) {
-        enterRepairMode();
+        showMobileStoryIntro(name);
         return;
     }
     const faultCount = _spaceWrongItems.length;
